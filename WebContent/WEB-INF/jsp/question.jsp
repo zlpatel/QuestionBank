@@ -13,7 +13,7 @@
 		<tr>
 			<td>
 				<label>${command.statement}</label>
-				  
+				<form:hidden path="questionId" value= "${command.questionId}" />
 			</td>
 		</tr>
 		<tr>

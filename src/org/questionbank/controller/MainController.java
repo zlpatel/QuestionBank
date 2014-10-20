@@ -2,7 +2,6 @@ package org.questionbank.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.questionbank.form.QuestionBean;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,7 @@ public class MainController
 
 	protected static Logger logger = Logger.getLogger("controller");
 	
-	QuestionBean question=new QuestionBean();
+	
 	/**
 	 * Handles and retrieves the common JSP page that everyone can see
 	 * 
@@ -64,24 +63,23 @@ public class MainController
 		
 		List<String> optionList = new ArrayList<String>();
 		ModelAndView model=new ModelAndView("question");
-		System.out.println("new request came in");
-		System.out.println("statement should be null"+this.question.getStatement());
-		System.out.println("selectedOption should be null"+this.question.getSelectedOption());
-		this.question.setStatement("This is the question");
+		
+		QuestionBean question=new QuestionBean();
+		question.setQuestionId("12");
+		question.setStatement("This is the question");
 		optionList.add("option1");
 		optionList.add("option2");
 		optionList.add("option3");
 		optionList.add("option4");
 		model.addObject("optionList", optionList);
-		model.addObject("command", this.question);
+		model.addObject("command", question);
 		return model;
 	}
 	@RequestMapping(value = "/question", method = RequestMethod.POST)
-	public String questionFormSubmit(@ModelAttribute("command")QuestionBean ques)
+	public String questionFormSubmit(@ModelAttribute("command")QuestionBean question)
 	{
 		logger.debug("Question page subimtted");
-		question.setSelectedOption(ques.getSelectedOption());
-		System.out.println(question.getStatement());
+		System.out.println(question.getQuestionId());
 		System.out.println(question.getSelectedOption());
 		return "commonpage";
 	}

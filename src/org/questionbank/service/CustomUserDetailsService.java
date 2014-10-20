@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.questionbank.dao.UserDAO;
-import org.questionbank.domain.DbUser;
+import org.questionbank.dto.UserDTO;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * This custom service must implement Spring's {@link UserDetailsService}
  */
+@SuppressWarnings("deprecation")
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 	
@@ -43,20 +44,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 			// You can provide a custom DAO to access your persistence layer
 			// Or use JDBC to access your database
 			// DbUser is our custom domain user. This is not the same as Spring's User
-			DbUser dbUser = userDAO.searchDatabase(username);
+			UserDTO dbUser = userDAO.searchDatabase(username);
 			
 			// Populate the Spring User object with details from the dbUser
 			// Here we just pass the username, password, and access level
 			// getAuthorities() will translate the access level to the correct role type
 
 			user =  new User(
-					dbUser.getUsername(), 
+					dbUser.getUserName(), 
 					dbUser.getPassword().toLowerCase(),
 					true,
 					true,
 					true,
 					true,
-					getAuthorities(dbUser.getAccess()) );
+					getAuthorities(Integer.parseInt(dbUser.getAccess())));
 
 		} catch (Exception e) {
 			logger.error("Error in retrieving user");

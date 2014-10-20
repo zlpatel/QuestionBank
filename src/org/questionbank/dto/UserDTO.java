@@ -7,6 +7,7 @@
 package org.questionbank.dto;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Students.findByName", query = "SELECT s FROM Students s WHERE s.name = :name"),
     @NamedQuery(name = "Students.findByAsuid", query = "SELECT s FROM Students s WHERE s.asuid = :asuid"),
     @NamedQuery(name = "Students.findByPassword", query = "SELECT s FROM Students s WHERE s.password = :password")})
-public class StudentsDTO implements Serializable {
+public class UserDTO implements Serializable 
+{
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(nullable = false, length = 40)
@@ -40,15 +42,35 @@ public class StudentsDTO implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false, length = 32)
     private String password;
+    @Column(nullable = false, length = 40)
+    private String userName;
+    public String getUserName() {
+		return userName;
+	}
 
-    public StudentsDTO() {
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * The password as an MD5 value
+	 */
+    @Column(nullable = false, length = 10)
+    private String access;
+    /**
+	 * Access level of the user. 
+	 * 1 = Admin user
+	 * 2 = Regular user
+	 */
+
+    public UserDTO() {
     }
 
-    public StudentsDTO(String asuid) {
+    public UserDTO(String asuid) {
         this.asuid = asuid;
     }
 
-    public StudentsDTO(String asuid, String name, String password) {
+    public UserDTO(String asuid, String name, String password) {
         this.asuid = asuid;
         this.name = name;
         this.password = password;
@@ -87,11 +109,11 @@ public class StudentsDTO implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StudentsDTO)) {
+        
+        if (!(object instanceof UserDTO)) {
             return false;
         }
-        StudentsDTO other = (StudentsDTO) object;
+        UserDTO other = (UserDTO) object;
         if ((this.asuid == null && other.asuid != null) || (this.asuid != null && !this.asuid.equals(other.asuid))) {
             return false;
         }
@@ -102,5 +124,13 @@ public class StudentsDTO implements Serializable {
     public String toString() {
         return "Test_QB_ORM.Students[ asuid=" + asuid + " ]";
     }
+
+	public String getAccess() {
+		return access;
+	}
+
+	public void setAccess(String access) {
+		this.access = access;
+	}
     
 }
