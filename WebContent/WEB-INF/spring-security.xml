@@ -21,7 +21,7 @@
 			authentication-failure-url="/auth/login?error=true"
 			default-target-url="/main/common" />
 
-	<security:session-management invalid-session-url="/auth/login" session-fixation-protection="newSession">
+	<security:session-management invalid-session-url="/auth/login" >
 	    	<security:concurrency-control
 	    	   max-sessions="1"
 		       error-if-maximum-exceeded="true" 
