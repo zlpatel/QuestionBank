@@ -13,7 +13,7 @@ public class AdminController
 
 	protected static Logger logger = Logger.getLogger("controller");
 	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getAdminPage() {
 		logger.debug("Received request to show admin page");
 
