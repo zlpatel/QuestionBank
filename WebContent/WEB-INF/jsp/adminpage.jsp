@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Admin Page</title>
 <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
@@ -18,8 +18,6 @@
 <body>
 <h1>Admin Page</h1>
 <p>Only admins have access to this page.</p>
-<p>Curabitur quis libero elit, dapibus iaculis nisl. Nullam quis velit eget odio 
-adipiscing tristique non sed ligula. In auctor diam eget nisl condimentum laoreet..</p>
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
  
@@ -35,7 +33,7 @@ adipiscing tristique non sed ligula. In auctor diam eget nisl condimentum laoree
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-<a href="common">Home |</a> <a href="javascript:formSubmit()"> Logout</a>
+<a href="home">Home |</a> <a href="javascript:formSubmit()"> Logout</a>
 
 </body>
 </html>

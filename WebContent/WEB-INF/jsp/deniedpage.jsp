@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Access Denied</title>
 <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
@@ -16,6 +16,6 @@
 </head>
 <body>
 <h1>Access Denied!</h1>
-<p>Only admins can see this page!</p>
+<p>You Don't have access to see this page!</p>
 </body>
 </html>
