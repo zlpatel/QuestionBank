@@ -2,7 +2,6 @@ package org.questionbank.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.questionbank.service.SecurityContextAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,6 @@ public class LoginLogoutController {
 	public String getLoginPage(@RequestParam(value="error", required=false) boolean error, 
 			ModelMap model,HttpServletRequest request,HttpSession session) {
 		logger.debug("Received request to show login page");
-
-//		if (error == true) {
-//			model.put("error", "You have entered an invalid username or password!");
-//		} else {
-//			model.put("error", "");
-//		}
-//		
-//		return "loginpage";
-		
 		if (securityContextAccessor.isCurrentAuthenticationAnonymous()) {
 			if (error == true) {
 				model.put("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
@@ -71,7 +61,6 @@ public class LoginLogoutController {
 		}else{
 			error = "Invalid username and password!";
 		}
- 
 		return error;
 	}
 }
