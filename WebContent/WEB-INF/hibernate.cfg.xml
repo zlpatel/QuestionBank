@@ -12,15 +12,13 @@
 			<value>/WEB-INF/properties/database.properties</value>
 		</property>
 	</bean>
-
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     	<property name="dataSource">
     		<ref bean="dataSource"/>
     	</property>
@@ -36,6 +34,7 @@
     		</list>
     	</property>
     </bean>
+    
     <tx:annotation-driven />
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

@@ -18,7 +18,7 @@
 <body>
 
 <h1>User Page</h1>
-<h2>Hi,${USERNAME}</h2>
+<h2>Hi, ${USERNAME}</h2>
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
  

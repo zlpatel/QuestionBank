@@ -12,23 +12,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author zeel
- */
 @Entity
-@Table(catalog = "qb_test", schema = "")
+@Table(catalog = "test", schema = "")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Students.findAll", query = "SELECT s FROM Students s"),
-    @NamedQuery(name = "Students.findByName", query = "SELECT s FROM Students s WHERE s.name = :name"),
-    @NamedQuery(name = "Students.findByAsuid", query = "SELECT s FROM Students s WHERE s.asuid = :asuid"),
-    @NamedQuery(name = "Students.findByPassword", query = "SELECT s FROM Students s WHERE s.password = :password")})
 public class UserDTO implements Serializable 
 {
     private static final long serialVersionUID = 1L;
