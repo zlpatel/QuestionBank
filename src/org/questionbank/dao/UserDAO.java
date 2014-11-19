@@ -4,6 +4,6 @@ import org.questionbank.dto.UserDTO;
 
 public interface UserDAO {
 
-	public UserDTO searchDatabase(String username);
+	public UserDTO fetchUserByUserName(String username);
 
 }
