@@ -16,34 +16,27 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(catalog = "test", schema = "")
+@Table(catalog = "test", schema = "",name="users")
 @XmlRootElement
 public class UserDTO implements Serializable 
 {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 40,name="fullName")
     private String name;
-    @Id
+        
     @Basic(optional = false)
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 10,name="asuid")
     private String asuid;
+    
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false, length = 32,name="passkey")
     private String password;
-    @Column(nullable = false, length = 40)
+    
+    @Id
+	@Column(nullable = false, length = 40,name="userName")
     private String userName;
-    public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	/**
-	 * The password as an MD5 value
-	 */
+	
     @Column(nullable = false, length = 10)
     private String access;
     /**
@@ -51,6 +44,13 @@ public class UserDTO implements Serializable
 	 * 1 = Admin user
 	 * 2 = Regular user
 	 */
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
     public UserDTO() {
     }
