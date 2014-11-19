@@ -13,46 +13,64 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author zeel
- */
 @Entity
-@Table(catalog = "qb_test", schema = "")
+@Table(catalog = "test", schema = "", name="questions")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
-    @NamedQuery(name = "Questions.findByQuestionId", query = "SELECT q FROM Questions q WHERE q.questionId = :questionId"),
-    @NamedQuery(name = "Questions.findByStatement", query = "SELECT q FROM Questions q WHERE q.statement = :statement"),
-    @NamedQuery(name = "Questions.findByOptions", query = "SELECT q FROM Questions q WHERE q.options = :options")})
-public class QuestionsDTO implements Serializable {
+public class QuestionDTO implements Serializable 
+{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "question_id", nullable = false)
     private Integer questionId;
+    
     @Column(length = 10)
     private String statement;
+    
     @Basic(optional = false)
     @Column(nullable = false, length = 32)
-    private String options;
+    private String option1;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 32)
+    private String option2;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 32)
+    private String option3;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 32)
+    private String option4;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 32)
+    private String option5;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 32)
+    private String answer;
 
-    public QuestionsDTO() {
+    public QuestionDTO() {
     }
 
-    public QuestionsDTO(Integer questionId) {
+    public QuestionDTO(Integer questionId) {
         this.questionId = questionId;
     }
 
-    public QuestionsDTO(Integer questionId, String options) {
+    public QuestionDTO(Integer questionId, String option1, String option2, String option3, String option4, String option5, String answer) 
+    {
         this.questionId = questionId;
-        this.options = options;
+        this.option1=option1;
+        this.option2=option2;
+        this.option3=option3;
+        this.option4=option4;
+        this.option5=option5;
+        this.answer=answer;
     }
 
     public Integer getQuestionId() {
@@ -71,14 +89,6 @@ public class QuestionsDTO implements Serializable {
         this.statement = statement;
     }
 
-    public String getOptions() {
-        return options;
-    }
-
-    public void setOptions(String options) {
-        this.options = options;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -88,18 +98,65 @@ public class QuestionsDTO implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof QuestionsDTO)) {
+        if (!(object instanceof QuestionDTO)) {
             return false;
         }
-        QuestionsDTO other = (QuestionsDTO) object;
+        QuestionDTO other = (QuestionDTO) object;
         if ((this.questionId == null && other.questionId != null) || (this.questionId != null && !this.questionId.equals(other.questionId))) {
             return false;
         }
         return true;
     }
 
-    @Override
+    public String getOption1() {
+		return option1;
+	}
+
+	public void setOption1(String option1) {
+		this.option1 = option1;
+	}
+
+	public String getOption2() {
+		return option2;
+	}
+
+	public void setOption2(String option2) {
+		this.option2 = option2;
+	}
+
+	public String getOption3() {
+		return option3;
+	}
+
+	public void setOption3(String option3) {
+		this.option3 = option3;
+	}
+
+	public String getOption4() {
+		return option4;
+	}
+
+	public void setOption4(String option4) {
+		this.option4 = option4;
+	}
+
+	public String getOption5() {
+		return option5;
+	}
+
+	public void setOption5(String option5) {
+		this.option5 = option5;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	@Override
     public String toString() {
         return "Test_QB_ORM.Questions[ questionId=" + questionId + " ]";
     }
