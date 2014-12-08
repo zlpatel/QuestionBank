@@ -7,20 +7,20 @@
 			http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<!-- This is where we configure Spring-Security -->
-<security:http auto-config="true" use-expressions="true" disable-url-rewriting="true" access-denied-page="/auth/denied" >
-		<security:intercept-url pattern="/auth/login" requires-channel="https"
+<security:http auto-config="true" use-expressions="true" disable-url-rewriting="true" access-denied-page="/secure/auth/denied" >
+		<security:intercept-url pattern="/secure/auth/login" requires-channel="https"
 			access="permitAll" />
 			<security:intercept-url pattern="/j_spring_security_check" requires-channel="https"/>
-		<security:intercept-url pattern="/admin/**" requires-channel="https"
+		<security:intercept-url pattern="/secure/admin/**" requires-channel="https"
 			access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/user/**" requires-channel="https"
+		<security:intercept-url pattern="/secure/user/**" requires-channel="https"
 			access="hasRole('ROLE_USER')" />
 
-		<security:form-login login-page="/auth/login"
-			authentication-failure-url="/auth/login?error=true"
+		<security:form-login login-page="/secure/auth/login"
+			authentication-failure-url="/secure/auth/login?error=true"
 			authentication-success-handler-ref="myAuthenticationSuccessHandler"	/>
 
-		<security:session-management invalid-session-url="/auth/login">
+		<security:session-management invalid-session-url="/secure/auth/login">
 	    	<security:concurrency-control
 	    	   max-sessions="1"
 		       error-if-maximum-exceeded="true" 
@@ -29,7 +29,7 @@
 		  	
 		<security:logout delete-cookies="JSESSIONID"
 				invalidate-session="true" 
-				logout-success-url="/auth/login" 
+				logout-success-url="/secure/auth/login" 
 				/>
 
 		<!-- enable csrf protection -->
