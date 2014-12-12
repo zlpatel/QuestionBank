@@ -28,6 +28,7 @@ public class QuestionController
 		ModelAndView model=new ModelAndView("questionpage");
 		QuestionFormBean question=questionService.getAQuestion();
 		model.addObject("optionList", question.getOptionList());
+		model.addObject("wholeQuestion",question.getWholeQuestion());
 		model.addObject("command", question);
 		return model;
 	}
@@ -36,7 +37,9 @@ public class QuestionController
 	{
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
+		System.out.println(question.getSelectedOption());
 		boolean result=questionService.checkAnswer(question.getQuestionId(),question.getSelectedOption());
+		
 		if(result)
 			question.setMessage("Your answer is correct :D !!");
 		else
