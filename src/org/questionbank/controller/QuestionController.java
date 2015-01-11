@@ -1,5 +1,7 @@
 package org.questionbank.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
@@ -21,24 +23,27 @@ public class QuestionController
 	QuestionService questionService;
 
 	@RequestMapping(value = "/question", method = RequestMethod.GET)
-	public ModelAndView initForm() 
+	public ModelAndView initForm(HttpSession session) 
 	{
 		logger.debug("Received request to show question page");
 		
 		ModelAndView model=new ModelAndView("questionpage");
-		QuestionFormBean question=questionService.getAQuestion();
+		String userName=(String)session.getAttribute("USERNAME");
+		logger.debug(userName+" User logged in");
+		QuestionFormBean question=questionService.getAQuestion(userName);
 		model.addObject("optionList", question.getOptionList());
 		model.addObject("wholeQuestion",question.getWholeQuestion());
 		model.addObject("command", question);
 		return model;
 	}
 	@RequestMapping(value = "/question", method = RequestMethod.POST)
-	public ModelAndView  questionFormSubmit(@ModelAttribute("command")QuestionFormBean question)
+	public ModelAndView  questionFormSubmit(@ModelAttribute("command")QuestionFormBean question,HttpSession session)
 	{
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
-		System.out.println(question.getSelectedOption());
-		boolean result=questionService.checkAnswer(question.getQuestionId(),question.getSelectedOption());
+		//System.out.println(question.getSelectedOption());
+		String userName=(String)session.getAttribute("USERNAME");
+		boolean result=questionService.checkAnswer(question.getQuestionId(),question.getSelectedOption(),userName);
 		
 		if(result)
 			question.setMessage("Your answer is correct :D !!");
@@ -57,4 +62,5 @@ public class QuestionController
 		else
 			return "userpage";
 	}
+	
 }

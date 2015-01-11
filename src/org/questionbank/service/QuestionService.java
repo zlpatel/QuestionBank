@@ -4,6 +4,6 @@ import org.questionbank.form.QuestionFormBean;
 
 public interface QuestionService 
 {
-	QuestionFormBean getAQuestion();
-	boolean checkAnswer(String questionId, String selectedOption);
+	QuestionFormBean getAQuestion(String userName);
+	boolean checkAnswer(String questionId, String selectedOption, String userName);
 }

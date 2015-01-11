@@ -11,14 +11,10 @@ public class UserController
 {
 
 	protected static Logger logger = Logger.getLogger("controller");
-	
-	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getCommonPage() {
 		logger.debug("Received request to show user home page");
 
 		return "userpage";
 	}
-
-	
 }
