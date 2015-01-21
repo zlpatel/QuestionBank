@@ -1,14 +1,15 @@
 package org.questionbank.form;
 
-import java.util.List;
+import java.util.TreeMap;
 
 public class QuestionFormBean 
 {
 	private String questionId;
 	private String statement;
-	private List<String> optionList;
+	private TreeMap<String,String> optionList;
 	private String selectedOption;
 	private String message;
+	private String wholeQuestion; 
 	public String getStatement() {
 		return statement;
 	}
@@ -27,10 +28,10 @@ public class QuestionFormBean
 	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
-	public List<String> getOptionList() {
+	public TreeMap<String,String> getOptionList() {
 		return optionList;
 	}
-	public void setOptionList(List<String> optionList) {
+	public void setOptionList(TreeMap<String,String> optionList) {
 		this.optionList = optionList;
 	}
 	public String getMessage() {
@@ -38,6 +39,12 @@ public class QuestionFormBean
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public String getWholeQuestion() {
+		return wholeQuestion;
+	}
+	public void setWholeQuestion(String wholeQuestion) {
+		this.wholeQuestion = wholeQuestion;
 	}
 	
 }
