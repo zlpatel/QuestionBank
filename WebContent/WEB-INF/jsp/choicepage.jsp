@@ -17,8 +17,13 @@
 </head>
 <body>
 	<h2>${message}</h2>
-	<h2>Thank you for taking the test. Do you want to answer more questions?</h2>
+	<h2>Thank you for taking the test.</h2>
+	<h2>Below is a video with explanation of the answer!</h2>
+	<video width="400" controls>
+  		<source src="${pageContext.request.contextPath}/externalresources/videos/sample.mp4" type="video/mp4">
+  		Your browser does not support HTML5 video.
+	</video>
+	<h2> Do you want to answer more questions?</h2>
 	<a href="choice/true">YES</a> <a href="home">NO</a>
-
 </body>
 </html>
