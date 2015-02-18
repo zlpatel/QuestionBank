@@ -25,7 +25,7 @@
                 class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
  
 		<property name="jobDetail" ref="myJob" />
-		<property name="cronExpression" value="0 45 14 ? * MON-FRI" />
+		<property name="cronExpression" value="0 20 13 ? * MON-FRI" />
  
 	</bean>
 
