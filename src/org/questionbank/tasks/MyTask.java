@@ -9,7 +9,7 @@ public class MyTask {
   // printing current system time  
 //  System.out.println("Current Time : " + Calendar.getInstance().getTime()); 
   SendMailTLS mailService=new SendMailTLS();
-  mailService.sendEmail("zlpatel@hotmail.com", ""+Calendar.getInstance().getTime() ,"Reminder");
+  mailService.sendEmail("cdeshmuk@asu.edu", ""+Calendar.getInstance().getTime() ,"Reminder");
  }  
   
 }  
