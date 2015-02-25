@@ -16,6 +16,16 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<center><h1> QUESTION BANK </h1> </center>
+<center><h4>Hi! ${USERNAME}</h4></center>
+
+<ul class="nav nav-tabs">
+<li><a href="home">Home</a></li>
+<li class="active"><a href="#">Solve Questions</a></li>
+<li><a href="javascript:formSubmit()">Logout</a> </li>
+</ul>
+<br>
 	<h2>${message}</h2>
 	<h2>Thank you for taking the test.</h2>
 	<h2>Below is a video with explanation of the answer!</h2>
@@ -25,5 +35,20 @@
 	</video>
 	<h2> Do you want to answer more questions?</h2>
 	<a href="choice/true">YES</a> <a href="home">NO</a>
+	
+	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+ 
+	<!-- csrf for log out-->
+	<form action="${logoutUrl}" method="post" id="logoutForm">
+	  <input type="hidden" 
+		name="${_csrf.parameterName}"
+		value="${_csrf.token}" />
+	</form>
+	
+	<script>
+		function formSubmit() {
+			document.getElementById("logoutForm").submit();
+		}
+	</script>
 </body>
 </html>

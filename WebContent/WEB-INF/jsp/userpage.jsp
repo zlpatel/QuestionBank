@@ -16,9 +16,15 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<center><h1> QUESTION BANK </h1> </center>
+<center><h4>Hi! ${USERNAME}</h4></center>
 
-<h1>User Page</h1>
-<h2>Hi, ${USERNAME}</h2>
+<ul class="nav nav-tabs">
+<li class="active"><a href="#">Home</a></li>
+<li><a href="question">Solve Questions</a></li>
+<li><a href="javascript:formSubmit()">Logout</a> </li>
+</ul>
+<br>
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
  
@@ -34,6 +40,6 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-<a href="question">Solve Questions |</a> <a href="javascript:formSubmit()"> Logout</a>
+
 </body>
 </html>

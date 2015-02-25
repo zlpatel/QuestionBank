@@ -39,6 +39,15 @@
 
 </head>
 <body onload="convertFromLatexToMathML()">
+<center><h1> QUESTION BANK </h1> </center>
+<center><h4>Hi! ${USERNAME}</h4></center>
+
+<ul class="nav nav-tabs">
+<li><a href="home">Home</a></li>
+<li class="active"><a href="#">Solve Questions</a></li>
+<li><a href="javascript:formSubmit()">Logout</a> </li>
+</ul>
+<br>
 	<form:form method="POST" modelattribute="command">
 		<table>
 			<tr>
@@ -49,7 +58,7 @@
 				<td><input type="hidden" id="latex"
 					value="${command.wholeQuestion}" style="width: 500px; height: 20px"></input>
 					<canvas id="latexCanvas" width="0" height="0"
-						style="border:1px solid #000000;"></canvas></td>
+						style="border:0px solid #000000;"></canvas></td>
 			</tr>
 			<tr>
 				<td><form:select element="li" path="selectedOption">
@@ -63,5 +72,20 @@
 			</tr>
 		</table>
 	</form:form>
+	
+	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+ 
+	<!-- csrf for log out-->
+	<form action="${logoutUrl}" method="post" id="logoutForm">
+	  <input type="hidden" 
+		name="${_csrf.parameterName}"
+		value="${_csrf.token}" />
+	</form>
+	
+	<script>
+		function formSubmit() {
+			document.getElementById("logoutForm").submit();
+		}
+	</script>
 </body>
 </html>
