@@ -19,10 +19,14 @@ public class RightAttemptsDTO implements Serializable
 	@ManyToOne
 	@JoinColumn(name="question_id", referencedColumnName="question_id", nullable = false)
 	private QuestionDTO question;
+	
 	@Id
 	@ManyToOne
 	@JoinColumn(name="userName", referencedColumnName="userName", nullable = false)
 	private UserDTO user;
+	
+	
+	
 	public QuestionDTO getQuestion() {
 		return question;
 	}

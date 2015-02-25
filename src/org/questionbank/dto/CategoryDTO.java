@@ -27,7 +27,8 @@ public class CategoryDTO implements Serializable
     @Basic(optional = false)
     @Column(name = "category_id", nullable = false)
     private Integer categoryId;
-    @Column(name = "category_name", length = 20)
+    
+    @Column(name = "category_name")
     private String categoryName;
 
     public CategoryDTO() {
@@ -62,7 +63,7 @@ public class CategoryDTO implements Serializable
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        
         if (!(object instanceof CategoryDTO)) {
             return false;
         }

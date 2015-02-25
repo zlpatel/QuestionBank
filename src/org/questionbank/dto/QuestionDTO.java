@@ -32,28 +32,36 @@ public class QuestionDTO implements Serializable
     private String statement;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(name = "category_id", nullable = false)
+    private String categoryId;
+    
+    @Basic(optional = false)
+    @Column(nullable = false)
     private String option1;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String option2;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String option3;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String option4;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String option5;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String answer;
+    
+    @Basic(optional = false)
+    @Column(name = "has_Image", nullable = false)
+    private boolean hasImage;
 
     public QuestionDTO() {
     }
