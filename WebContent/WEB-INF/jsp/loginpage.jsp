@@ -45,7 +45,7 @@
             <h4>Sign-In</h4>
             <input type="text" id="j_username" name="j_username" class="form-control input-sm chat-input" placeholder="username" required autofocus/>
             </br>
-            <input type="text" id="j_password" name="j_password" class="form-control input-sm chat-input" placeholder="password" required/>
+            <input type="password" id="j_password" name="j_password" class="form-control input-sm chat-input" placeholder="password" required/>
             </br>
             <div class="wrapper">
             <span class="group-btn">     
