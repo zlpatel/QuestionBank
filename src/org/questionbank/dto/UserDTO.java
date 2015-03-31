@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class UserDTO implements Serializable 
 {
     private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @Column(nullable = false, length = 40,name="fullName")
     private String name;

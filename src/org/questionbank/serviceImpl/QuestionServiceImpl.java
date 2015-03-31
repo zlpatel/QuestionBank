@@ -5,7 +5,8 @@ import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import org.questionbank.dao.QuestionDAO;
 import org.questionbank.dao.UserDAO;
-import org.questionbank.dto.QuestionDTO;
+import org.questionbank.dto.IQuestion;
+import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.UserDTO;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
@@ -31,7 +32,8 @@ public class QuestionServiceImpl implements QuestionService
 		StringBuffer wholeQuestion=new StringBuffer();
 		wholeQuestion.append("$");
 		QuestionFormBean questionFormBean=new QuestionFormBean();
-		QuestionDTO questionDTO=questionDAO.getAnUnansweredQuestion(userName);
+		IQuestion iQuestion=questionDAO.getAnUnansweredQuestion(userName);
+		RegularQuestionDTO questionDTO=(RegularQuestionDTO)iQuestion;
 		questionFormBean.setQuestionId(questionDTO.getQuestionId().toString());
 		questionFormBean.setStatement(questionDTO.getStatement());
 		wholeQuestion.append(questionDTO.getStatement());
@@ -56,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService
 	@Override
 	public boolean checkAnswer(String questionId, String selectedOption,String userName) 
 	{		
-		QuestionDTO questionDTO= questionDAO.getThisQuestion(questionId);
+		RegularQuestionDTO questionDTO= questionDAO.getThisQuestion(questionId);
 		UserDTO user=userDAO.fetchUserByUserName(userName);
 		if(selectedOption.equals(questionDTO.getAnswer()))
 		{

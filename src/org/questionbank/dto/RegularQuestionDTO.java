@@ -7,19 +7,22 @@
 package org.questionbank.dto;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(catalog = "test", schema = "", name="questions")
 @XmlRootElement
-public class QuestionDTO implements Serializable 
+public class RegularQuestionDTO implements Serializable,IQuestion 
 {
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,6 +30,14 @@ public class QuestionDTO implements Serializable
     @Basic(optional = false)
     @Column(name = "question_id", nullable = false)
     private Integer questionId;
+    
+    @Column(name="assigned_date")
+    private java.util.Date assignedDate;
+    
+    @ManyToOne
+    @JoinColumn(name="type_id", referencedColumnName="type_id")
+    @Column(name="type_id")
+    private QuestionTypeDTO type;
     
     @Column(length = 10)
     private String statement;
@@ -63,14 +74,14 @@ public class QuestionDTO implements Serializable
     @Column(name = "has_Image", nullable = false)
     private boolean hasImage;
 
-    public QuestionDTO() {
+    public RegularQuestionDTO() {
     }
 
-    public QuestionDTO(Integer questionId) {
+    public RegularQuestionDTO(Integer questionId) {
         this.questionId = questionId;
     }
-
-    public QuestionDTO(Integer questionId, String option1, String option2, String option3, String option4, String option5, String answer) 
+    
+    /*public QuestionDTO(Integer questionId, String option1, String option2, String option3, String option4, String option5, String answer) 
     {
         this.questionId = questionId;
         this.option1=option1;
@@ -79,7 +90,39 @@ public class QuestionDTO implements Serializable
         this.option4=option4;
         this.option5=option5;
         this.answer=answer;
-    }
+    }*/
+
+    public java.util.Date getAssignedDate() {
+		return assignedDate;
+	}
+
+	public void setAssignedDate(java.util.Date assignedDate) {
+		this.assignedDate = assignedDate;
+	}
+
+	public QuestionTypeDTO getType() {
+		return type;
+	}
+
+	public void setType(QuestionTypeDTO type) {
+		this.type = type;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public boolean isHasImage() {
+		return hasImage;
+	}
+
+	public void setHasImage(boolean hasImage) {
+		this.hasImage = hasImage;
+	}
 
     public Integer getQuestionId() {
         return questionId;
@@ -106,10 +149,10 @@ public class QuestionDTO implements Serializable
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof QuestionDTO)) {
+        if (!(object instanceof RegularQuestionDTO)) {
             return false;
         }
-        QuestionDTO other = (QuestionDTO) object;
+        RegularQuestionDTO other = (RegularQuestionDTO) object;
         if ((this.questionId == null && other.questionId != null) || (this.questionId != null && !this.questionId.equals(other.questionId))) {
             return false;
         }

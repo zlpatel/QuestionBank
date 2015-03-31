@@ -1,15 +1,15 @@
 package org.questionbank.dao;
 
-import org.questionbank.dto.QuestionDTO;
+import org.questionbank.dto.IQuestion;
+import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.UserDTO;
 
 
 public interface QuestionDAO 
 {
-	QuestionDTO getAnUnansweredQuestion(String userName);
+	IQuestion getAnUnansweredQuestion(String userName);
 	Integer getNumberOfQuestions();
-	QuestionDTO getThisQuestion(String questionId);
-	boolean isAnsweredCorrectly(QuestionDTO questionDTO, String userName);
+	RegularQuestionDTO getThisQuestion(String questionId);
 	void markAsRightAttempted(String questionId,UserDTO user);
 	void markAsWrongAttempted(String questionId,UserDTO user);
 }
