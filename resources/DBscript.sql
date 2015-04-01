@@ -48,15 +48,13 @@ CREATE TABLE questions(
         ON DELETE CASCADE
 );
 ALTER TABLE questions AUTO_INCREMENT=1;
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image) values(STR_TO_DATE('03-30-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=25",false);
-#insert into questions (assigned_date,question_type,statement,category_id,option1,option2,option3,option4,option5,answer) values("\\frac{a}{b}  = \\frac{5}{2} ","if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20");
-#insert into questions (assigned_date,question_type,statement,category_id,option1,option2,option3,option4,option5,answer) values("This is sample question 3","option1","option2","option3","option4","option5","option3");
-#insert into questions (assigned_date,question_type,statement,category_id,option1,option2,option3,option4,option5,answer) values("This is sample question 4","option1","option2","option3","option4","option5","option3");
-#insert into questions (assigned_date,question_type,statement,category_id,option1,option2,option3,option4,option5,answer) values("This is sample question 5","option1","option2","option3","option4","option5","option3");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image) values(STR_TO_DATE('03-31-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=5",false);
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image) values(STR_TO_DATE('04-01-2015', '%m-%d-%Y'),1,"\\frac{a}{b}  = \\frac{5}{2} ",1,"if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20",false);
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image) values(STR_TO_DATE('04-02-2015', '%m-%d-%Y'),1,"This is sample question 3",1,"option1","option2","option3","option4","option5","option3",false);
 select * from questions;
 delete from questions;
 drop table questions cascade;
-SET FOREIGN_KEY_CHECKS = 1; # 0 to ignore constraints and 1 to include 
+SET FOREIGN_KEY_CHECKS = 0; # 0 to ignore constraints and 1 to include 
 
 
 use test;
@@ -80,6 +78,8 @@ CREATE table Additional_questions(
         REFERENCES question_type(type_id)
         ON DELETE CASCADE
 );
+insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer,has_Image) values(2,"This is sample question 4",1,"option1","option2","option3","option4","option5","option3",false);
+insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer,has_Image) values(2,"This is sample question 5",1,"option1","option2","option3","option4","option5","option3",false);
 ALTER TABLE Additional_questions AUTO_INCREMENT=1;
 select * from Additional_questions;
 delete from Additional_questions;
@@ -100,6 +100,8 @@ CREATE table Additional_questions_lookup(
 );
 drop table Additional_questions_lookup;
 select * from Additional_questions_lookup;
+delete from Additional_questions_lookup;
+
 
 CREATE TABLE category(
   category_id int NOT NULL AUTO_INCREMENT,
@@ -123,21 +125,24 @@ insert into category (category_name) values("The limit of a function");
 use test;
 CREATE TABLE RightAttempts(
 	userName varchar(40) NOT NULL,
-	question_id int NOT NULL,
+	regular_question_id int,
+	additional_question_id int,
 	type_id int,
 	attempt_time timestamp,
 	INDEX userName (userName),
     FOREIGN KEY (userName) 
         REFERENCES users(userName)
         ON DELETE CASCADE,
-	INDEX question_id (question_id),
-    FOREIGN KEY (question_id) 
+	FOREIGN KEY (regular_question_id) 
         REFERENCES questions(question_id)
+        ON DELETE CASCADE,
+	FOREIGN KEY (additional_question_id) 
+        REFERENCES Additional_questions(question_id)
         ON DELETE CASCADE,
 	FOREIGN KEY (type_id) 
         REFERENCES question_type(type_id)
         ON DELETE CASCADE,
-	PRIMARY KEY (userName, question_id, attempt_time)
+	PRIMARY KEY (userName, attempt_time)
 );
 drop table RightAttempts;
 select * from test.RightAttempts;
@@ -147,22 +152,24 @@ delete from RightAttempts;
 use test;
 CREATE TABLE WrongAttempts(
 	userName varchar(40) NOT NULL,
-	question_id int NOT NULL,
+	regular_question_id int,
+	additional_question_id int,
 	type_id int,
 	attempt_time timestamp,
-	attempt_count int NOT NULL,
 	INDEX userName (userName),
     FOREIGN KEY (userName) 
         REFERENCES users(userName)
         ON DELETE CASCADE,
-	INDEX question_id (question_id),
-    FOREIGN KEY (question_id) 
+	FOREIGN KEY (regular_question_id) 
         REFERENCES questions(question_id)
+        ON DELETE CASCADE,
+	FOREIGN KEY (additional_question_id) 
+        REFERENCES Additional_questions(question_id)
         ON DELETE CASCADE,
 	FOREIGN KEY (type_id) 
         REFERENCES question_type(type_id)
         ON DELETE CASCADE,
-	PRIMARY KEY (userName, question_id, attempt_time)
+	PRIMARY KEY (userName, attempt_time)
 );
 drop table WrongAttempts;
 select * from WrongAttempts;

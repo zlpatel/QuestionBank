@@ -22,9 +22,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(catalog = "test", schema = "", name="questions")
 @XmlRootElement
-public class RegularQuestionDTO implements Serializable,IQuestion 
+public class RegularQuestionDTO implements Serializable 
 {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -36,7 +37,6 @@ public class RegularQuestionDTO implements Serializable,IQuestion
     
     @ManyToOne
     @JoinColumn(name="type_id", referencedColumnName="type_id")
-    @Column(name="type_id")
     private QuestionTypeDTO type;
     
     @Column(length = 10)

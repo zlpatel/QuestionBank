@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(catalog = "test", schema = "", name="Additional_questions")
 @XmlRootElement
-public class AdditionalQuestionDTO implements Serializable,IQuestion 
+public class AdditionalQuestionDTO implements Serializable 
 {
     private static final long serialVersionUID = 1L;
     
@@ -28,7 +28,6 @@ public class AdditionalQuestionDTO implements Serializable,IQuestion
     
     @ManyToOne
     @JoinColumn(name="type_id", referencedColumnName="type_id")
-    @Column(name="type_id")
     private QuestionTypeDTO type;
     
     @Column(length = 10)

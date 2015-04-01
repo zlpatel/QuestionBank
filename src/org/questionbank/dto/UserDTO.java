@@ -22,6 +22,10 @@ public class UserDTO implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
+    @Id
+	@Column(nullable = false, length = 40,name="userName")
+    private String userName;
+	
     @Basic(optional = false)
     @Column(nullable = false, length = 40,name="fullName")
     private String name;
@@ -34,10 +38,6 @@ public class UserDTO implements Serializable
     @Column(nullable = false, length = 32,name="passkey")
     private String password;
     
-    @Id
-	@Column(nullable = false, length = 40,name="userName")
-    private String userName;
-	
     @Column(nullable = false, length = 10)
     private String access;
     /**

@@ -19,10 +19,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WrongAttemptsDTO implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	@Id
+	
 	@ManyToOne
-	@JoinColumn(name="question_id", referencedColumnName="question_id", nullable = false)
-	private RegularQuestionDTO question;
+	@JoinColumn(name="regular_question_id", referencedColumnName="question_id")
+	private RegularQuestionDTO questionRegular;
+	
+	@ManyToOne
+	@JoinColumn(name="additional_question_id", referencedColumnName="question_id")
+	private AdditionalQuestionDTO questionAdditional;
 	
 	@Id
 	@ManyToOne
@@ -34,12 +38,8 @@ public class WrongAttemptsDTO implements Serializable
 	@Temporal(TemporalType.TIMESTAMP) 
 	public Date attemptTime;
 	
-	@Column(name = "attempt_count", nullable = false)
-	private int attemptCount;
-	
 	@ManyToOne
     @JoinColumn(name="type_id", referencedColumnName="type_id")
-    @Column(name="type_id")
     private QuestionTypeDTO type;
 	
 	public Date getAttemptTime() {
@@ -55,17 +55,18 @@ public class WrongAttemptsDTO implements Serializable
 	public void setType(QuestionTypeDTO type) {
 		this.type = type;
 	}
-	public int getAttemptCount() {
-		return attemptCount;
+	
+	public RegularQuestionDTO getQuestionRegular() {
+		return questionRegular;
 	}
-	public void setAttemptCount(int attemptCount) {
-		this.attemptCount = attemptCount;
+	public void setQuestionRegular(RegularQuestionDTO questionRegular) {
+		this.questionRegular = questionRegular;
 	}
-	public RegularQuestionDTO getQuestion() {
-		return question;
+	public AdditionalQuestionDTO getQuestionAdditional() {
+		return questionAdditional;
 	}
-	public void setQuestion(RegularQuestionDTO question) {
-		this.question = question;
+	public void setQuestionAdditional(AdditionalQuestionDTO questionAdditional) {
+		this.questionAdditional = questionAdditional;
 	}
 	public UserDTO getUser() {
 		return user;
