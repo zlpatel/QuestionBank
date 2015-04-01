@@ -16,6 +16,7 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<<<<<<< HEAD
 
 <center><h1> QUESTION BANK </h1> </center>
 <center><h4>Hi! ${USERNAME}</h4></center>
@@ -27,7 +28,11 @@
 </ul>
 <br>
 	<h2>${message}</h2>
+=======
+	<h2>${question.message}</h2>
+>>>>>>> refs/heads/chaitanyaBranch
 	<h2>Thank you for taking the test.</h2>
+<<<<<<< HEAD
 	<h2>Below is a video with explanation of the answer!</h2>
 	<video width="400" controls>
   		<source src="${pageContext.request.contextPath}/externalresources/videos/sample.mp4" type="video/mp4">
@@ -50,5 +55,21 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
+=======
+	<c:choose>
+      <c:when test="${question.correct}">
+      		<h2>Below is a video with explanation of the answer!</h2>
+			<video width="400" controls>
+	  			<source src="${pageContext.request.contextPath}/externalresources/videos/sample.mp4" type="video/mp4">
+  				Your browser does not support HTML5 video.
+			</video>
+			<h2> Do you want to answer more questions?</h2>
+	  </c:when>
+      <c:otherwise>
+   			<h2> Do you want to try again?</h2>
+   	  </c:otherwise>
+    </c:choose>
+    <a href="choice/true">YES</a> <a href="home">NO</a>
+>>>>>>> refs/heads/chaitanyaBranch
 </body>
 </html>

@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
 //@WebFilter("/*")
@@ -22,7 +21,7 @@ public class NoCacheFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-	    System.out.println("Filter Started!");
+	    //System.out.println("Filter Started!");
 		HttpServletResponse hsr = (HttpServletResponse) res;
 	    hsr.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 	    hsr.setHeader("Pragma", "no-cache"); // HTTP 1.0.

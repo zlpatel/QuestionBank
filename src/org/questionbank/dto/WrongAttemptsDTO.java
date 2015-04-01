@@ -1,6 +1,7 @@
 package org.questionbank.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -16,31 +19,54 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WrongAttemptsDTO implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	@Id
-	@ManyToOne
-	@JoinColumn(name="question_id", referencedColumnName="question_id", nullable = false)
-	private QuestionDTO question;
 	
+	@ManyToOne
+	@JoinColumn(name="regular_question_id", referencedColumnName="question_id")
+	private RegularQuestionDTO questionRegular;
+	
+	@ManyToOne
+	@JoinColumn(name="additional_question_id", referencedColumnName="question_id")
+	private AdditionalQuestionDTO questionAdditional;
 	
 	@Id
 	@ManyToOne
 	@JoinColumn(name="userName", referencedColumnName="userName", nullable = false)
 	private UserDTO user;
 	
-	@Column(name = "attempt_count", nullable = false)
-	private int attemptCount;
+	@Id
+	@Column(name="attempt_time")
+	@Temporal(TemporalType.TIMESTAMP) 
+	public Date attemptTime;
 	
-	public int getAttemptCount() {
-		return attemptCount;
+	@ManyToOne
+    @JoinColumn(name="type_id", referencedColumnName="type_id")
+    private QuestionTypeDTO type;
+	
+	public Date getAttemptTime() {
+		return attemptTime;
 	}
-	public void setAttemptCount(int attemptCount) {
-		this.attemptCount = attemptCount;
+	public void setAttemptTime(Date attemptTime) {
+		this.attemptTime = attemptTime;
 	}
-	public QuestionDTO getQuestion() {
-		return question;
+	
+	public QuestionTypeDTO getType() {
+		return type;
 	}
-	public void setQuestion(QuestionDTO question) {
-		this.question = question;
+	public void setType(QuestionTypeDTO type) {
+		this.type = type;
+	}
+	
+	public RegularQuestionDTO getQuestionRegular() {
+		return questionRegular;
+	}
+	public void setQuestionRegular(RegularQuestionDTO questionRegular) {
+		this.questionRegular = questionRegular;
+	}
+	public AdditionalQuestionDTO getQuestionAdditional() {
+		return questionAdditional;
+	}
+	public void setQuestionAdditional(AdditionalQuestionDTO questionAdditional) {
+		this.questionAdditional = questionAdditional;
 	}
 	public UserDTO getUser() {
 		return user;

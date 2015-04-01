@@ -1,14 +1,16 @@
 package org.questionbank.daoImpl;
-import java.util.List;
-import java.util.Random;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 import org.questionbank.dao.QuestionDAO;
-import org.questionbank.dto.QuestionDTO;
+import org.questionbank.dto.AdditionalQuestionDTO;
+import org.questionbank.dto.AdditionalQuestionLookupDTO;
+import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.RightAttemptsDTO;
 import org.questionbank.dto.UserDTO;
 import org.questionbank.dto.WrongAttemptsDTO;
@@ -22,45 +24,10 @@ public class QuestionDAOImpl implements QuestionDAO
 	private SessionFactory sessionFactory;
 	protected static Logger logger = Logger.getLogger("dao");
 
-	@Override
-	public QuestionDTO getAnUnansweredQuestion(String userName) 
+	public boolean checkInRightAttempted(String userName,Integer questionId) 
 	{
-		logger.debug("Request to find a random question in QuestionDAO");
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuestionDTO.class)
-				.setProjection(Projections.property("questionId"));
-		List<?> list = criteria.list();
-		QuestionDTO questionDTO=new QuestionDTO(); 
-		Random random=new Random();
-		int size=list.size();
-		boolean isAlreadyAnsweredCorrectly=true;
-		int findTries=0;
-		while(isAlreadyAnsweredCorrectly)
-		{
-			int next=random.nextInt(size);
-			String questionIdToGet = list.get(next).toString();
-			Query query = sessionFactory.getCurrentSession().createQuery("FROM QuestionDTO q WHERE q.questionId = :questionId");
-			query.setString("questionId", questionIdToGet);
-			questionDTO = (QuestionDTO) query.uniqueResult();
-			if(questionDTO!=null)
-				isAlreadyAnsweredCorrectly=isAnsweredCorrectly(questionDTO,userName);
-			if(findTries==size)
-			{
-				logger.error("All Questions already answered, No new question Found!");
-				throw new RuntimeException("All Questions answered, No new question Found!");
-			}
-			findTries++;
-		}
-		if(!isAlreadyAnsweredCorrectly)
-			return questionDTO;
-		logger.error("Question does not exist!");
-		throw new RuntimeException("Question does not exist!");
-	}
-	
-	@Override
-	public boolean isAnsweredCorrectly(QuestionDTO questionDTO,String userName) {
-		logger.debug("Request to find if a random question is already answered");
-		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.question.questionId = :questionId and r.user.userName = :userName");
-		query.setString("questionId", questionDTO.getQuestionId().toString());
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.questionRegular.questionId = :questionId and r.user.userName = :userName");
+		query.setString("questionId", questionId.toString());
 		query.setString("userName", userName);
 		long count = (Long) query.uniqueResult();
 		if(count!=0)
@@ -72,19 +39,32 @@ public class QuestionDAOImpl implements QuestionDAO
 	public Integer getNumberOfQuestions() 
 	{
 		logger.debug("Request to find number of questions");
-		Query query = sessionFactory.getCurrentSession().createQuery("SELECT COUNT(q) FROM QuestionDTO q");
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT COUNT(q) FROM RegularQuestionDTO q");
 		Long qouestionCount = (Long)query.uniqueResult();
 		Integer i = (int) (long) qouestionCount;
 		return i;
 	}
     @Override
-	public QuestionDTO getThisQuestion(String questionId) 
+	public RegularQuestionDTO getThisRegularQuestion(String questionId) 
 	{
 		logger.debug("Request to find a given question in QuestionDAO");
-		QuestionDTO questionDTO=new QuestionDTO(); 
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM QuestionDTO q WHERE q.questionId = :questionId");
+		RegularQuestionDTO questionDTO=new RegularQuestionDTO(); 
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM RegularQuestionDTO q WHERE q.questionId = :questionId");
 		query.setString("questionId", questionId);
-		questionDTO = (QuestionDTO) query.uniqueResult();
+		questionDTO = (RegularQuestionDTO) query.uniqueResult();
+		if(questionDTO!=null)
+			return questionDTO;
+		logger.error("Question does not exist!");
+		throw new RuntimeException("Question does not exist!");
+	}
+    @Override
+    public AdditionalQuestionDTO getThisAdditionalQuestion(String questionId) 
+	{
+		logger.debug("Request to find a given question in QuestionDAO");
+		AdditionalQuestionDTO questionDTO=new AdditionalQuestionDTO(); 
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO q WHERE q.questionId = :questionId");
+		query.setString("questionId", questionId);
+		questionDTO = (AdditionalQuestionDTO) query.uniqueResult();
 		if(questionDTO!=null)
 			return questionDTO;
 		logger.error("Question does not exist!");
@@ -92,43 +72,105 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public void markAsRightAttempted(String questionId, UserDTO user) {
+	public void markAsRightAttemptedRegular(String questionId, UserDTO user) {
 		logger.debug("Marking the question as Right Attempt");
 		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
-		QuestionDTO question=getThisQuestion(questionId);
-		rightAttempt.setQuestion(question);
+		java.util.Date date= new java.util.Date();
+		rightAttempt.setAttemptTime(new Timestamp(date.getTime()));
+		RegularQuestionDTO question=getThisRegularQuestion(questionId);
+		rightAttempt.setQuestionRegular(question);
 		rightAttempt.setUser(user);
+		rightAttempt.setType(question.getType());
 		sessionFactory.getCurrentSession().save(rightAttempt);
+	}
+	@Override
+	public void markAsRightAttemptedAdditional(String questionId, UserDTO user) {
+		logger.debug("Marking the question as Right Attempt");
+		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
+		java.util.Date date= new java.util.Date();
+		rightAttempt.setAttemptTime(new Timestamp(date.getTime()));
+		AdditionalQuestionDTO questionAdditional=getThisAdditionalQuestion(questionId);
+		rightAttempt.setQuestionAdditional(questionAdditional);
+		rightAttempt.setUser(user);
+		rightAttempt.setType(questionAdditional.getType());
+		sessionFactory.getCurrentSession().save(rightAttempt);
+		AdditionalQuestionLookupDTO lookUp=new AdditionalQuestionLookupDTO();
+		lookUp.setQuestion(questionAdditional);
+		lookUp.setUser(user);
+		sessionFactory.getCurrentSession().saveOrUpdate(lookUp);
 	}
 
 	@Override
-	public void markAsWrongAttempted(String questionId, UserDTO user) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM WrongAttemptsDTO w WHERE w.question.questionId = :questionId and w.user.userName=:userName");
-		query.setString("questionId", questionId);
-		query.setString("userName", user.getUserName());
-		WrongAttemptsDTO wrongAttempt = (WrongAttemptsDTO)query.uniqueResult();
-		if(wrongAttempt==null)
-		{
-			logger.debug("Marking the question as Wrong Attempt");
-			wrongAttempt=new WrongAttemptsDTO();
-			QuestionDTO question=getThisQuestion(questionId);
-			wrongAttempt.setQuestion(question);
-			wrongAttempt.setUser(user);
-			wrongAttempt.setAttemptCount(1);
-			sessionFactory.getCurrentSession().save(wrongAttempt);
-		}	
+	public void markAsWrongAttemptedRegular(String questionId, UserDTO user) {
+		logger.debug("Marking the question as Wrong Attempt");
+		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
+		wrongAttempt=new WrongAttemptsDTO();
+		RegularQuestionDTO question=getThisRegularQuestion(questionId);
+		wrongAttempt.setQuestionRegular(question);
+		wrongAttempt.setUser(user);
+		wrongAttempt.setType(question.getType());
+		java.util.Date date= new java.util.Date();
+		wrongAttempt.setAttemptTime(new Timestamp(date.getTime()));
+		sessionFactory.getCurrentSession().save(wrongAttempt);
+	}
+
+	@Override
+	public void markAsWrongAttemptedAdditional(String questionId, UserDTO user) {
+		logger.debug("Marking the question as Wrong Attempt");
+		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
+		wrongAttempt=new WrongAttemptsDTO();
+		AdditionalQuestionDTO additionalQuestion=getThisAdditionalQuestion(questionId);
+		wrongAttempt.setQuestionAdditional(additionalQuestion);
+		wrongAttempt.setUser(user);
+		wrongAttempt.setType(additionalQuestion.getType());
+		java.util.Date date= new java.util.Date();
+		wrongAttempt.setAttemptTime(new Timestamp(date.getTime()));
+		sessionFactory.getCurrentSession().save(wrongAttempt);
+		
+	}
+
+	@Override
+	public RegularQuestionDTO getTodaysQuestion() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date));
+		// get the assigned question for today
+		RegularQuestionDTO questionDTO;
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM RegularQuestionDTO q WHERE q.assignedDate = :assignedDate");
+		query.setString("assignedDate", dateFormat.format(date));
+		questionDTO = (RegularQuestionDTO) query.uniqueResult();
+		return questionDTO;
+	}
+
+	@Override
+	public AdditionalQuestionLookupDTO checkIfLookUpTableIsEmpty(String userName) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionLookupDTO aql WHERE aql.user.userName = :userName");
+		query.setString("userName", userName);
+		AdditionalQuestionLookupDTO AQlookUpDTO= (AdditionalQuestionLookupDTO) query.uniqueResult();
+		return AQlookUpDTO;
+	}
+
+	@Override
+	public AdditionalQuestionDTO getNextAdditionalQuestion(AdditionalQuestionLookupDTO AQlookUpDTO, String userName) {
+		Integer nextQuestionId;
+		nextQuestionId=AQlookUpDTO.getQuestion().getQuestionId() + 1;
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO aq WHERE aq.questionId = :questionId");
+		query.setString("questionId", nextQuestionId.toString());
+		AdditionalQuestionDTO nextAditionalQuestion= (AdditionalQuestionDTO) query.uniqueResult();
+		if(nextAditionalQuestion!=null)
+			return nextAditionalQuestion;
 		else
-		{
-			logger.debug("Updating the question as Wrong Attempt");
-			Integer attemptCount=wrongAttempt.getAttemptCount();
-			attemptCount++;
-			wrongAttempt.setAttemptCount(attemptCount);
-			Query updateQuery = sessionFactory.getCurrentSession().createQuery("UPDATE WrongAttemptsDTO w set w.attemptCount = :attemptCount WHERE w.question.questionId = :questionId and w.user.userName=:userName");
-			updateQuery.setString("questionId", questionId);
-			updateQuery.setString("userName", user.getUserName());
-			updateQuery.setString("attemptCount", attemptCount.toString());
-			Integer result = updateQuery.executeUpdate();
-			System.out.println(result.toString()+" records Updated Wrong Attempt");
-		}
-	} 
+			throw new RuntimeException("All additional questions already answered!");
+	}
+
+	@Override
+	public AdditionalQuestionDTO getFirstAdditionalQuestion() {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO aq WHERE aq.questionId = :questionId");
+		query.setString("questionId", new Integer(1).toString());
+		AdditionalQuestionDTO firstAditionalQuestion= (AdditionalQuestionDTO) query.uniqueResult();
+		if(firstAditionalQuestion!=null)
+			return firstAditionalQuestion;
+		else
+			throw new RuntimeException("No additional questions added!");
+	}
 }

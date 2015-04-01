@@ -6,10 +6,25 @@ public class QuestionFormBean
 {
 	private String questionId;
 	private String statement;
+	private int typeId;
 	private TreeMap<String,String> optionList;
 	private String selectedOption;
 	private String message;
-	private String wholeQuestion; 
+	private String wholeQuestion;
+	private boolean correct;
+	
+	public int getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(int type) {
+		this.typeId = type;
+	}
+	public boolean isCorrect() {
+		return correct;
+	}
+	public void setCorrect(boolean correct) {
+		this.correct = correct;
+	}
 	public String getStatement() {
 		return statement;
 	}

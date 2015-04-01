@@ -52,7 +52,10 @@
 		<table>
 			<tr>
 				<td><form:hidden path="questionId"
-						value="${command.questionId}" /></td>
+						value="${command.questionId}" />
+				</td>
+				<td><form:hidden path="typeId"
+						value="${command.typeId}" /></td>
 			</tr>
 			<tr>
 				<td><input type="hidden" id="latex"

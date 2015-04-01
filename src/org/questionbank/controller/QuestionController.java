@@ -41,22 +41,21 @@ public class QuestionController
 	{
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
-		//System.out.println(question.getSelectedOption());
 		String userName=(String)session.getAttribute("USERNAME");
-		boolean result=questionService.checkAnswer(question.getQuestionId(),question.getSelectedOption(),userName);
-		
+		boolean result=questionService.checkAnswer(question,userName);
+		question.setCorrect(result);
 		if(result)
 			question.setMessage("Your answer is correct :D !!");
 		else
 			question.setMessage("Your answer is incorrect :( !!");
 		mav.setViewName("choicepage");
-		mav.addObject("message",question.getMessage());
+		mav.addObject("question",question);
 		return mav;
 	}
 	@RequestMapping(value = "/choice/{choice}", method=RequestMethod.GET)
 	public String moreQuestionChoice(@PathVariable boolean choice) 
 	{
-		logger.debug("More question choice get");
+		logger.debug("Trying again or opting for more questions!");
 		if(choice)
 			return "redirect:../question";
 		else
