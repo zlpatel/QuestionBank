@@ -16,33 +16,16 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<<<<<<< HEAD
-
 <center><h1> QUESTION BANK </h1> </center>
 <center><h4>Hi! ${USERNAME}</h4></center>
 
 <ul class="nav nav-tabs">
-<li><a href="home">Home</a></li>
-<li class="active"><a href="#">Solve Questions</a></li>
-<li><a href="javascript:formSubmit()">Logout</a> </li>
+	<li><a href="home">Home</a></li>
+	<li class="active"><a href="#">Solve Questions</a></li>
+	<li><a href="javascript:formSubmit()">Logout</a> </li>
 </ul>
 <br>
-	<h2>${message}</h2>
-=======
-	<h2>${question.message}</h2>
->>>>>>> refs/heads/chaitanyaBranch
-	<h2>Thank you for taking the test.</h2>
-<<<<<<< HEAD
-	<h2>Below is a video with explanation of the answer!</h2>
-	<video width="400" controls>
-  		<source src="${pageContext.request.contextPath}/externalresources/videos/sample.mp4" type="video/mp4">
-  		Your browser does not support HTML5 video.
-	</video>
-	<h2> Do you want to answer more questions?</h2>
-	<a href="choice/true">YES</a> <a href="home">NO</a>
-	
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
- 
 	<!-- csrf for log out-->
 	<form action="${logoutUrl}" method="post" id="logoutForm">
 	  <input type="hidden" 
@@ -55,7 +38,8 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-=======
+	<h2>${question.message}</h2>
+	<h2>Thank you for taking the test.</h2>
 	<c:choose>
       <c:when test="${question.correct}">
       		<h2>Below is a video with explanation of the answer!</h2>
@@ -70,6 +54,5 @@
    	  </c:otherwise>
     </c:choose>
     <a href="choice/true">YES</a> <a href="home">NO</a>
->>>>>>> refs/heads/chaitanyaBranch
 </body>
 </html>
