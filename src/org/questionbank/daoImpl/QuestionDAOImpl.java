@@ -133,7 +133,6 @@ public class QuestionDAOImpl implements QuestionDAO
 	public RegularQuestionDTO getTodaysQuestion() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
-		System.out.println(dateFormat.format(date));
 		// get the assigned question for today
 		RegularQuestionDTO questionDTO;
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM RegularQuestionDTO q WHERE q.assignedDate = :assignedDate");
@@ -172,5 +171,29 @@ public class QuestionDAOImpl implements QuestionDAO
 			return firstAditionalQuestion;
 		else
 			throw new RuntimeException("No additional questions added!");
+	}
+
+	@Override
+	public String getVideoLink(String questionId) {
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT q.videoLink FROM RegularQuestionDTO q WHERE q.questionId = :questionId");
+		query.setString("questionId", questionId);
+		String videoLink = (String) query.uniqueResult();
+		return videoLink;
+	}
+
+	@Override
+	public long getRightAttemptCount(String userName) {
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.user.userName = :userName");
+		query.setString("userName", userName);
+		long count = (Long) query.uniqueResult();
+		return count;
+	}
+
+	@Override
+	public long getWrongAttemptCount(String userName) {
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM WrongAttemptsDTO w WHERE w.user.userName = :userName");
+		query.setString("userName", userName);
+		long count = (Long) query.uniqueResult();
+		return count;
 	}
 }

@@ -44,7 +44,7 @@
       <c:when test="${question.correct}">
       		<h2>Below is a video with explanation of the answer!</h2>
 			<video width="400" controls>
-	  			<source src="${pageContext.request.contextPath}/externalresources/videos/sample.mp4" type="video/mp4">
+	  			<source src="${question.videoLink}" type="video/mp4">
   				Your browser does not support HTML5 video.
 			</video>
 			<h2> Do you want to answer more questions?</h2>

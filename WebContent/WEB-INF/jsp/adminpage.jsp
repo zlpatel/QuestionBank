@@ -16,8 +16,15 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Admin Page</h1>
-<p>Only admins have access to this page.</p>
+<center><h1> QUESTION BANK </h1> </center>
+<center><h4>Hi! ${USERNAME}</h4></center>
+
+<ul class="nav nav-tabs">
+<li class="active"><a href="#">Home</a></li>
+<li><a href="studentsRecord">Students Record</a></li>
+<li><a href="javascript:formSubmit()">Logout</a> </li>
+</ul>
+<br>
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
  
@@ -33,7 +40,5 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-<a href="home">Home |</a> <a href="javascript:formSubmit()"> Logout</a>
-
 </body>
 </html>

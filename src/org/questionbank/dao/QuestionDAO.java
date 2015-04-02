@@ -20,4 +20,7 @@ public interface QuestionDAO
 	AdditionalQuestionLookupDTO checkIfLookUpTableIsEmpty(String userName);
 	AdditionalQuestionDTO getNextAdditionalQuestion(AdditionalQuestionLookupDTO aQlookUpDTO, String userName);
 	AdditionalQuestionDTO getFirstAdditionalQuestion();
+	String getVideoLink(String questionId);
+	long getRightAttemptCount(String userName);
+	long getWrongAttemptCount(String userName);
 }
