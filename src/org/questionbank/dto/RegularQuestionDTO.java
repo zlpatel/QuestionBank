@@ -73,7 +73,11 @@ public class RegularQuestionDTO implements Serializable
     @Basic(optional = false)
     @Column(name = "has_Image", nullable = false)
     private boolean hasImage;
-
+    
+    
+    @Column(name = "video_link", nullable = true)
+    private String videoLink;
+    
     public RegularQuestionDTO() {
     }
 

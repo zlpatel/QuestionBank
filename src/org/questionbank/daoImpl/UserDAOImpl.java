@@ -1,8 +1,11 @@
 package org.questionbank.daoImpl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.questionbank.dao.UserDAO;
 import org.questionbank.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,7 @@ public class UserDAOImpl implements UserDAO{
 	protected static Logger logger = Logger.getLogger("dao");
 	
 	@Autowired
-	private SessionFactory factory;
+	private SessionFactory sessionFactory;
 	
 	//Method to retrieve user by a username
 	@Override
@@ -23,7 +26,7 @@ public class UserDAOImpl implements UserDAO{
 		Session session = null;
 		UserDTO user = null;
 		try {
-			session = factory.getCurrentSession();
+			session = sessionFactory.getCurrentSession();
 			user = (UserDTO)session.get(UserDTO.class, username);
 			return user;
 		}
@@ -34,5 +37,15 @@ public class UserDAOImpl implements UserDAO{
 		finally{
 			
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserDTO> getAllStudents() {
+		List<UserDTO> students = null;
+		logger.debug("Request to get all students");
+		students=sessionFactory.getCurrentSession().createCriteria(UserDTO.class).add(Restrictions.eq("access","2")).list();
+		return students;
+		
 	}
 }

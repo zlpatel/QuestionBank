@@ -12,7 +12,14 @@ public class QuestionFormBean
 	private String message;
 	private String wholeQuestion;
 	private boolean correct;
+	private String videoLink;
 	
+	public String getVideoLink() {
+		return videoLink;
+	}
+	public void setVideoLink(String videoLink) {
+		this.videoLink = videoLink;
+	}
 	public int getTypeId() {
 		return typeId;
 	}

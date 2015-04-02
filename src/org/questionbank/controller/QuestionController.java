@@ -42,6 +42,8 @@ public class QuestionController
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
 		String userName=(String)session.getAttribute("USERNAME");
+		String videoLink=questionService.getVideoLink(question);
+		question.setVideoLink(videoLink);
 		boolean result=questionService.checkAnswer(question,userName);
 		question.setCorrect(result);
 		if(result)

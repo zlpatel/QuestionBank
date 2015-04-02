@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class QuestionServiceImpl implements QuestionService 
 {
-	protected static Logger logger = Logger.getLogger("service");
+	protected static Logger logger = Logger.getLogger("question service");
 	@Autowired
 	private QuestionDAO questionDAO;
 	@Autowired
@@ -125,6 +125,13 @@ public class QuestionServiceImpl implements QuestionService
 		
 		
 		
+	}
+	@Override
+	public String getVideoLink(QuestionFormBean question) {
+		if(question.getTypeId()==2)
+			return null;
+		String videoLink=questionDAO.getVideoLink(question.getQuestionId());
+		return videoLink;
 	}
 	
 }

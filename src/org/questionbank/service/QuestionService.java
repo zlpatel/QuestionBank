@@ -6,4 +6,5 @@ public interface QuestionService
 {
 	QuestionFormBean getAQuestion(String userName);
 	public boolean checkAnswer(QuestionFormBean question,String userName);
+	String getVideoLink(QuestionFormBean question);
 }
