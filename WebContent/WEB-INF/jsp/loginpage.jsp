@@ -25,8 +25,7 @@
 	
 </head>
 <body>
-
-<center><h1> QUESTION BANK </h1> </center>
+<center><h1 class=" bg-primary"> QUESTION BANK </h1></center>
 
 <%-- <div id="login-error">${error}</div> --%>
 
@@ -66,6 +65,6 @@
 			document.getElementById("loginform").submit();
 		}
 	</script>
-
+</div>
 </body>
 </html>

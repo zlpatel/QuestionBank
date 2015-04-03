@@ -14,6 +14,9 @@
 <!-- Optional theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
+	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
+	
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/JavaScript"
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
@@ -39,14 +42,16 @@
 
 </head>
 <body onload="convertFromLatexToMathML()">
-<center><h1> QUESTION BANK </h1> </center>
+<center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
 <center><h4>Hi! ${USERNAME}</h4></center>
 
-<ul class="nav nav-tabs">
+<nav class="navbar navbar-default navbar-static-top">
+<ul class="nav navbar-nav">
 <li><a href="home">Home</a></li>
 <li class="active"><a href="#">Solve Questions</a></li>
 <li><a href="javascript:formSubmit()">Logout</a> </li>
 </ul>
+</nav>
 <br>
 	<form:form method="POST" modelattribute="command">
 		<table>
