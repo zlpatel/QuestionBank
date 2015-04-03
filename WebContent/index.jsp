@@ -6,6 +6,5 @@
 <meta http-equiv="refresh" content="0; url=/QuestionBank/secure/auth/login" />
 </head>
 <body>
-	<%-- <jsp:forward page="/auth/login"></jsp:forward> --%>
 </body>
 </html>

@@ -33,9 +33,9 @@ public class AdditionalQuestionDTO implements Serializable
     @Column(length = 10)
     private String statement;
     
-    @Basic(optional = false)
-    @Column(name = "category_id", nullable = false)
-    private String categoryId;
+    @ManyToOne
+	@JoinColumn(name="category_id", referencedColumnName="category_id", nullable = false)
+	private CategoryDTO category;
     
     @Basic(optional = false)
     @Column(nullable = false)
@@ -91,12 +91,12 @@ public class AdditionalQuestionDTO implements Serializable
 		this.type = type;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public CategoryDTO getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(CategoryDTO category) {
+		this.category = category;
 	}
 
 	public boolean isHasImage() {
