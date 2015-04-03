@@ -8,5 +8,6 @@ public interface UserDAO {
 
 	public UserDTO fetchUserByUserName(String username);
 	public List<UserDTO> getAllStudents();
+	public UserDTO getThisStudent(String userName);
 
 }

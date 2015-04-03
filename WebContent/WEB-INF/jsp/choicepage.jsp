@@ -12,18 +12,22 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
 	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
+	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<center><h1> QUESTION BANK </h1> </center>
+<center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
 <center><h4>Hi! ${USERNAME}</h4></center>
 
-<ul class="nav nav-tabs">
+<nav class="navbar navbar-default navbar-static-top">
+<ul class="nav navbar-nav">
 	<li><a href="home">Home</a></li>
 	<li class="active"><a href="#">Solve Questions</a></li>
 	<li><a href="javascript:formSubmit()">Logout</a> </li>
 </ul>
+</nav>
 <br>
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 	<!-- csrf for log out-->
@@ -42,12 +46,16 @@
 	<h2>Thank you for taking the test.</h2>
 	<c:choose>
       <c:when test="${question.correct}">
+      <c:choose>
+      	<c:when test="${question.typeId == 1}">
       		<h2>Below is a video with explanation of the answer!</h2>
 			<video width="400" controls>
 	  			<source src="${question.videoLink}" type="video/mp4">
   				Your browser does not support HTML5 video.
 			</video>
-			<h2> Do you want to answer more questions?</h2>
+		</c:when>
+		</c:choose>
+		<h2> Do you want to answer more questions?</h2>
 	  </c:when>
       <c:otherwise>
    			<h2> Do you want to try again?</h2>

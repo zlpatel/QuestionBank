@@ -16,14 +16,16 @@
 	<script src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<center><h1> QUESTION BANK </h1> </center>
+<center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
 <center><h4>Hi! ${USERNAME}</h4></center>
 
-<ul class="nav nav-tabs">
+<nav class="navbar navbar-default navbar-static-top">
+<ul class="nav navbar-nav">
 <li class="active"><a href="#">Home</a></li>
 <li><a href="studentsRecord">Students Record</a></li>
 <li><a href="javascript:formSubmit()">Logout</a> </li>
 </ul>
+</nav>
 <br>
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />

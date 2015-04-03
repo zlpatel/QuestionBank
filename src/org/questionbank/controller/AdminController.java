@@ -3,6 +3,7 @@ package org.questionbank.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.questionbank.form.CategoricalRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,23 +38,27 @@ public class AdminController
 		mav.addObject("recordList",recordList);
 		return mav;
 	}
-	@RequestMapping(value = "/categoricalRecords/{user}", method = RequestMethod.POST)
-	public ModelAndView getSingleStudentCategoricalDetails(@PathVariable String user) {
-		logger.debug("Received request to single student record based on category");
-		//TODO: 
+	@RequestMapping(value = "/categoricalRecords/{userName}", method = RequestMethod.POST)
+	public ModelAndView getSingleStudentCategoricalDetails(@PathVariable String userName) {
+		logger.debug("Received request to show single student record based on category");
 		ModelAndView mav=new ModelAndView();
+		String studentName=adminService.getStudentName(userName);
+		List<CategoricalRecordFormBean> recordList=adminService.getCategoricalRecord(userName);
+		mav.addObject("recordList", recordList);
+		mav.addObject("studentName", studentName);
+		mav.setViewName("categoricalrecord");
 		return mav;
 	}
-	@RequestMapping(value = "/regularQuestionsRecords/{user}", method = RequestMethod.POST)
-	public ModelAndView getSingleStudentRegularQuestionsDetails(@PathVariable String user) {
-		logger.debug("Received request to single student record for Regular Questions");
-		//TODO:
+	@RequestMapping(value = "/regularQuestionsRecords/{userName}", method = RequestMethod.POST)
+	public ModelAndView getSingleStudentRegularQuestionsDetails(@PathVariable String userName) {
+		logger.debug("Received request to show single student record for Regular Questions");
 		ModelAndView mav=new ModelAndView();
+		
 		return mav;
 	}
-	@RequestMapping(value = "/additionalQuestionsRecords/{user}", method = RequestMethod.POST)
-	public ModelAndView getSingleStudentAdditionalQuestionsDetails(@PathVariable String user) {
-		logger.debug("Received request to single student record for Additional Questions");
+	@RequestMapping(value = "/additionalQuestionsRecords/{userName}", method = RequestMethod.POST)
+	public ModelAndView getSingleStudentAdditionalQuestionsDetails(@PathVariable String userName) {
+		logger.debug("Received request to show single student record for Additional Questions");
 		//TODO:
 		ModelAndView mav=new ModelAndView();
 		return mav;

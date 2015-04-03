@@ -42,9 +42,9 @@ public class RegularQuestionDTO implements Serializable
     @Column(length = 10)
     private String statement;
     
-    @Basic(optional = false)
-    @Column(name = "category_id", nullable = false)
-    private String categoryId;
+    @ManyToOne
+	@JoinColumn(name="category_id", referencedColumnName="category_id", nullable = false)
+	private CategoryDTO category;
     
     @Basic(optional = false)
     @Column(nullable = false)
@@ -85,17 +85,6 @@ public class RegularQuestionDTO implements Serializable
         this.questionId = questionId;
     }
     
-    /*public QuestionDTO(Integer questionId, String option1, String option2, String option3, String option4, String option5, String answer) 
-    {
-        this.questionId = questionId;
-        this.option1=option1;
-        this.option2=option2;
-        this.option3=option3;
-        this.option4=option4;
-        this.option5=option5;
-        this.answer=answer;
-    }*/
-
     public java.util.Date getAssignedDate() {
 		return assignedDate;
 	}
@@ -112,12 +101,20 @@ public class RegularQuestionDTO implements Serializable
 		this.type = type;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public CategoryDTO getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(CategoryDTO category) {
+		this.category = category;
+	}
+
+	public String getVideoLink() {
+		return videoLink;
+	}
+
+	public void setVideoLink(String videoLink) {
+		this.videoLink = videoLink;
 	}
 
 	public boolean isHasImage() {
