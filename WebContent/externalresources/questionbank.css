@@ -1,13 +1,17 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
-  background-color:#fff;
+  background-color:#a8a8a1;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif;
 }
 
+.bg-primary{
+	background-color:#67655d;
+}
+
 .container {
     padding: 25px;
-    position: fixed;
+    position: fixed;   
 }
 
 .form-login {
