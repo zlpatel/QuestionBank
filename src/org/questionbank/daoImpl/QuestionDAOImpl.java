@@ -3,6 +3,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -72,25 +73,27 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public void markAsRightAttemptedRegular(String questionId, UserDTO user) {
+	public void markAsRightAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) {
 		logger.debug("Marking the question as Right Attempt");
 		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
 		java.util.Date date= new java.util.Date();
 		rightAttempt.setAttemptTime(new Timestamp(date.getTime()));
 		RegularQuestionDTO question=getThisRegularQuestion(questionId);
 		rightAttempt.setQuestionRegular(question);
+		rightAttempt.setSelectedAnswer(selectedAnswer);
 		rightAttempt.setUser(user);
 		rightAttempt.setType(question.getType());
 		sessionFactory.getCurrentSession().save(rightAttempt);
 	}
 	@Override
-	public void markAsRightAttemptedAdditional(String questionId, UserDTO user) {
+	public void markAsRightAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) {
 		logger.debug("Marking the question as Right Attempt");
 		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
 		java.util.Date date= new java.util.Date();
 		rightAttempt.setAttemptTime(new Timestamp(date.getTime()));
 		AdditionalQuestionDTO questionAdditional=getThisAdditionalQuestion(questionId);
 		rightAttempt.setQuestionAdditional(questionAdditional);
+		rightAttempt.setSelectedAnswer(selectedAnswer);
 		rightAttempt.setUser(user);
 		rightAttempt.setType(questionAdditional.getType());
 		sessionFactory.getCurrentSession().save(rightAttempt);
@@ -101,12 +104,14 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public void markAsWrongAttemptedRegular(String questionId, UserDTO user) {
+	public void markAsWrongAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) {
 		logger.debug("Marking the question as Wrong Attempt");
+		System.out.println("Selected Answer is :::: "+selectedAnswer);
 		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
 		wrongAttempt=new WrongAttemptsDTO();
 		RegularQuestionDTO question=getThisRegularQuestion(questionId);
 		wrongAttempt.setQuestionRegular(question);
+		wrongAttempt.setSelectedAnswer(selectedAnswer);
 		wrongAttempt.setUser(user);
 		wrongAttempt.setType(question.getType());
 		java.util.Date date= new java.util.Date();
@@ -115,12 +120,13 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public void markAsWrongAttemptedAdditional(String questionId, UserDTO user) {
+	public void markAsWrongAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) {
 		logger.debug("Marking the question as Wrong Attempt");
 		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
 		wrongAttempt=new WrongAttemptsDTO();
 		AdditionalQuestionDTO additionalQuestion=getThisAdditionalQuestion(questionId);
 		wrongAttempt.setQuestionAdditional(additionalQuestion);
+		wrongAttempt.setSelectedAnswer(selectedAnswer);
 		wrongAttempt.setUser(user);
 		wrongAttempt.setType(additionalQuestion.getType());
 		java.util.Date date= new java.util.Date();
@@ -195,5 +201,25 @@ public class QuestionDAOImpl implements QuestionDAO
 		query.setString("userName", userName);
 		long count = (Long) query.uniqueResult();
 		return count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RightAttemptsDTO> getQuestionsListForRightAttempts(String userName, int questionType) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM RightAttemptsDTO r WHERE r.user.userName = :userName and r.type.typeId = :typeId");
+		query.setString("userName", userName);
+		query.setInteger("typeId", questionType);
+		List<RightAttemptsDTO> list=query.list();
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<WrongAttemptsDTO> getQuestionsListForWrongAttempts(String userName, int questionType) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM WrongAttemptsDTO w WHERE w.user.userName = :userName and w.type.typeId = :typeId");
+		query.setString("userName", userName);
+		query.setInteger("typeId", questionType);
+		List<WrongAttemptsDTO> list=query.list();
+		return list;
 	}
 }

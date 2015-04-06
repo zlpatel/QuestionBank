@@ -102,11 +102,11 @@ public class QuestionServiceImpl implements QuestionService
 		{
 			questionDTO= (RegularQuestionDTO)questionDAO.getThisRegularQuestion(question.getQuestionId());
 			if(question.getSelectedOption().equals(questionDTO.getAnswer())) {
-				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(), user);
+				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;
 			}
 			else{
-				questionDAO.markAsWrongAttemptedRegular(question.getQuestionId(), user);
+				questionDAO.markAsWrongAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return false;
 			}
 		}
@@ -114,11 +114,11 @@ public class QuestionServiceImpl implements QuestionService
 		{
 			additionalQuestionDTO= (AdditionalQuestionDTO)questionDAO.getThisAdditionalQuestion(question.getQuestionId());
 			if(question.getSelectedOption().equals(additionalQuestionDTO.getAnswer())) {
-				questionDAO.markAsRightAttemptedAdditional(question.getQuestionId(), user);
+				questionDAO.markAsRightAttemptedAdditional(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;
 			}
 			else{
-				questionDAO.markAsWrongAttemptedAdditional(question.getQuestionId(), user);
+				questionDAO.markAsWrongAttemptedAdditional(question.getQuestionId(),question.getSelectedOption(), user);
 				return false;
 			}
 		}

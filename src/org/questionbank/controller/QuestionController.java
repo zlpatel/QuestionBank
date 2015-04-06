@@ -27,10 +27,10 @@ public class QuestionController
 	{
 		logger.debug("Received request to show question page");
 		
-		ModelAndView model=new ModelAndView("questionpage");
 		String userName=(String)session.getAttribute("USERNAME");
 		logger.debug(userName+" User logged in");
 		QuestionFormBean question=questionService.getAQuestion(userName);
+		ModelAndView model=new ModelAndView("questionpage");
 		model.addObject("optionList", question.getOptionList());
 		model.addObject("wholeQuestion",question.getWholeQuestion());
 		model.addObject("command", question);

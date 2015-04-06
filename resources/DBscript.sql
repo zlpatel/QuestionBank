@@ -48,9 +48,9 @@ CREATE TABLE questions(
         REFERENCES question_type(type_id)
         ON DELETE CASCADE
 );
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-02-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=5",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-03-2015', '%m-%d-%Y'),1,"\\frac{a}{b}  = \\frac{5}{2} ",1,"if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-04-2015', '%m-%d-%Y'),1,"This is sample question 3",1,"option1","option2","option3","option4","option5","option3",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-05-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=5",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-06-2015', '%m-%d-%Y'),1,"\\frac{a}{b}  = \\frac{5}{2} ",1,"if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-07-2015', '%m-%d-%Y'),1,"This is sample question 3",1,"option1","option2","option3","option4","option5","option3",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
 select * from questions;
 ALTER TABLE questions AUTO_INCREMENT=1;
 delete from questions;
@@ -130,6 +130,7 @@ CREATE TABLE RightAttempts(
 	additional_question_id int,
 	type_id int,
 	attempt_time timestamp,
+	selected_answer text NOT NULL,
 	INDEX userName (userName),
     FOREIGN KEY (userName) 
         REFERENCES users(userName)
@@ -157,6 +158,7 @@ CREATE TABLE WrongAttempts(
 	additional_question_id int,
 	type_id int,
 	attempt_time timestamp,
+	selected_answer text NOT NULL,
 	INDEX userName (userName),
     FOREIGN KEY (userName) 
         REFERENCES users(userName)

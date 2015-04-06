@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.questionbank.form.CategoricalRecordFormBean;
+import org.questionbank.form.RegularQuestionsRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,11 @@ public class AdminController
 	public ModelAndView getSingleStudentRegularQuestionsDetails(@PathVariable String userName) {
 		logger.debug("Received request to show single student record for Regular Questions");
 		ModelAndView mav=new ModelAndView();
-		
+		String studentName=adminService.getStudentName(userName);
+		List<RegularQuestionsRecordFormBean> recordList=adminService.getRegularQuestionsRecord(userName);
+		mav.addObject("regularQuestionsRecordList", recordList);
+		mav.addObject("studentName", studentName);
+		mav.setViewName("regularquestionsrecord");
 		return mav;
 	}
 	@RequestMapping(value = "/additionalQuestionsRecords/{userName}", method = RequestMethod.POST)

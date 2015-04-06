@@ -1,6 +1,7 @@
 package org.questionbank.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,8 +9,11 @@ import org.questionbank.dao.CategoryDAO;
 import org.questionbank.dao.QuestionDAO;
 import org.questionbank.dao.UserDAO;
 import org.questionbank.dto.CategoryDTO;
+import org.questionbank.dto.RightAttemptsDTO;
 import org.questionbank.dto.UserDTO;
+import org.questionbank.dto.WrongAttemptsDTO;
 import org.questionbank.form.CategoricalRecordFormBean;
+import org.questionbank.form.RegularQuestionsRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +79,39 @@ public class AdminServiceImpl implements AdminService{
 			
 		}
 		return categoricalRecordList;
+	}
+
+	@Override
+	public List<RegularQuestionsRecordFormBean> getRegularQuestionsRecord(
+			String userName) {
+		logger.debug("Received request get regular questions records in admin service");
+		List<RegularQuestionsRecordFormBean> regularQuestionsRecordList=new ArrayList<RegularQuestionsRecordFormBean>();
+		List<RightAttemptsDTO> regularQuestionsListForRightAttempts=questionDAO.getQuestionsListForRightAttempts(userName,1);
+		List<WrongAttemptsDTO> regularQuestionsListForWrongAttempts=questionDAO.getQuestionsListForWrongAttempts(userName,1);
+		for(RightAttemptsDTO question : regularQuestionsListForRightAttempts)
+		{
+			RegularQuestionsRecordFormBean regularQuestionsRecord=new RegularQuestionsRecordFormBean();
+			regularQuestionsRecord.setQuestionName(question.getQuestionRegular().getStatement());
+			regularQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			regularQuestionsRecord.setDateTime(question.getAttemptTime());
+			regularQuestionsRecord.setResult(true);
+			regularQuestionsRecordList.add(regularQuestionsRecord);
+			
+		}
+		
+		for(WrongAttemptsDTO question : regularQuestionsListForWrongAttempts)
+		{
+			RegularQuestionsRecordFormBean regularQuestionsRecord=new RegularQuestionsRecordFormBean();
+			
+			regularQuestionsRecord.setQuestionName(question.getQuestionRegular().getStatement());
+			regularQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			regularQuestionsRecord.setDateTime(question.getAttemptTime());
+			regularQuestionsRecord.setResult(false);
+			regularQuestionsRecordList.add(regularQuestionsRecord);
+			
+		}
+		Collections.sort(regularQuestionsRecordList);
+		return regularQuestionsRecordList;
 	}
 
 }

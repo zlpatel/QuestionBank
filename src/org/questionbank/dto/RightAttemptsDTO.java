@@ -36,7 +36,10 @@ public class RightAttemptsDTO implements Serializable
 	@Id
 	@Column(name="attempt_time")
 	@Temporal(TemporalType.TIMESTAMP) 
-	public Date attemptTime;
+	private Date attemptTime;
+	
+	@Column(name="selected_answer", nullable = false)
+	private String selectedAnswer;
 	
 	@ManyToOne
     @JoinColumn(name="type_id", referencedColumnName="type_id")
@@ -54,7 +57,12 @@ public class RightAttemptsDTO implements Serializable
 	public void setAttemptTime(Date attemptTime) {
 		this.attemptTime = attemptTime;
 	}
-	
+	public String getSelectedAnswer() {
+		return selectedAnswer;
+	}
+	public void setSelectedAnswer(String selectedAnswer) {
+		this.selectedAnswer=selectedAnswer;
+	}
 	public RegularQuestionDTO getQuestionRegular() {
 		return questionRegular;
 	}
