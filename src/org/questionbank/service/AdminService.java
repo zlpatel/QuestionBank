@@ -1,9 +1,7 @@
 package org.questionbank.service;
 
 import java.util.List;
-
-
-
+import org.questionbank.form.AdditionalQuestionsRecordFormBean;
 import org.questionbank.form.RegularQuestionsRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
 import org.questionbank.form.CategoricalRecordFormBean;
@@ -13,5 +11,7 @@ public interface AdminService {
 	String getStudentName(String userName);
 	List<CategoricalRecordFormBean> getCategoricalRecord(String userName);
 	List<RegularQuestionsRecordFormBean> getRegularQuestionsRecord(
+			String userName);
+	List<AdditionalQuestionsRecordFormBean> getAdditionalQuestionsRecord(
 			String userName);
 }

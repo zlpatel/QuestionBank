@@ -12,6 +12,7 @@ import org.questionbank.dto.CategoryDTO;
 import org.questionbank.dto.RightAttemptsDTO;
 import org.questionbank.dto.UserDTO;
 import org.questionbank.dto.WrongAttemptsDTO;
+import org.questionbank.form.AdditionalQuestionsRecordFormBean;
 import org.questionbank.form.CategoricalRecordFormBean;
 import org.questionbank.form.RegularQuestionsRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
@@ -112,6 +113,39 @@ public class AdminServiceImpl implements AdminService{
 		}
 		Collections.sort(regularQuestionsRecordList);
 		return regularQuestionsRecordList;
+	}
+
+	@Override
+	public List<AdditionalQuestionsRecordFormBean> getAdditionalQuestionsRecord(
+			String userName) {
+		logger.debug("Received request get additional questions records in admin service");
+		List<AdditionalQuestionsRecordFormBean> additionalQuestionsRecordList=new ArrayList<AdditionalQuestionsRecordFormBean>();
+		List<RightAttemptsDTO> additionalQuestionsListForRightAttempts=questionDAO.getQuestionsListForRightAttempts(userName,2);
+		List<WrongAttemptsDTO> additionalQuestionsListForWrongAttempts=questionDAO.getQuestionsListForWrongAttempts(userName,2);
+		for(RightAttemptsDTO question : additionalQuestionsListForRightAttempts)
+		{
+			AdditionalQuestionsRecordFormBean additionalQuestionsRecord=new AdditionalQuestionsRecordFormBean();
+			additionalQuestionsRecord.setQuestionName(question.getQuestionAdditional().getStatement());
+			additionalQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			additionalQuestionsRecord.setDateTime(question.getAttemptTime());
+			additionalQuestionsRecord.setResult(true);
+			additionalQuestionsRecordList.add(additionalQuestionsRecord);
+			
+		}
+		
+		for(WrongAttemptsDTO question : additionalQuestionsListForWrongAttempts)
+		{
+			AdditionalQuestionsRecordFormBean additionalQuestionsRecord=new AdditionalQuestionsRecordFormBean();
+			
+			additionalQuestionsRecord.setQuestionName(question.getQuestionAdditional().getStatement());
+			additionalQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			additionalQuestionsRecord.setDateTime(question.getAttemptTime());
+			additionalQuestionsRecord.setResult(false);
+			additionalQuestionsRecordList.add(additionalQuestionsRecord);
+			
+		}
+		Collections.sort(additionalQuestionsRecordList);
+		return additionalQuestionsRecordList;
 	}
 
 }

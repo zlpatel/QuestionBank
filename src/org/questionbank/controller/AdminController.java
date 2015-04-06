@@ -3,6 +3,7 @@ package org.questionbank.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.questionbank.form.AdditionalQuestionsRecordFormBean;
 import org.questionbank.form.CategoricalRecordFormBean;
 import org.questionbank.form.RegularQuestionsRecordFormBean;
 import org.questionbank.form.StudentsRecordFormBean;
@@ -66,6 +67,11 @@ public class AdminController
 		logger.debug("Received request to show single student record for Additional Questions");
 		//TODO:
 		ModelAndView mav=new ModelAndView();
+		String studentName=adminService.getStudentName(userName);
+		List<AdditionalQuestionsRecordFormBean> recordList=adminService.getAdditionalQuestionsRecord(userName);
+		mav.addObject("additionalQuestionsRecordList", recordList);
+		mav.addObject("studentName", studentName);
+		mav.setViewName("additionalquestionsrecord");
 		return mav;
 	}
 }

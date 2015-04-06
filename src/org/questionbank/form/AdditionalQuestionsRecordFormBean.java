@@ -2,7 +2,7 @@ package org.questionbank.form;
 
 import java.util.Date;
 
-public class RegularQuestionsRecordFormBean implements Comparable<RegularQuestionsRecordFormBean>{
+public class AdditionalQuestionsRecordFormBean implements Comparable<AdditionalQuestionsRecordFormBean>{
 	private String questionName;
 	private String markedAnswer;
 	private Date dateTime;
@@ -34,7 +34,7 @@ public class RegularQuestionsRecordFormBean implements Comparable<RegularQuestio
 	}
 	
 	@Override
-	public int compareTo(RegularQuestionsRecordFormBean o1) {
+	public int compareTo(AdditionalQuestionsRecordFormBean o1) {
 		return this.dateTime.compareTo(o1.dateTime);
     }
 	
