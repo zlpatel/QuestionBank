@@ -31,10 +31,10 @@
 		FMATH.ApplicationConfiguration.setFolderUrlForFonts("fonts");
 		FMATH.ApplicationConfiguration.setFolderUrlForGlyphs("glyphs");
 
- 		function convertFromLatexToMathML()
+		function convertFromLatexToMathML(inputid,outputid)
 		{
-			var latexInput = document.getElementById("latex");
-			var latexCanvas=document.getElementById("latexCanvas");
+			var latexInput = document.getElementById(inputid);
+			var latexCanvas=document.getElementById(outputid);
 			var formula = new FMATH.MathMLFormula();
 			var mathml = formula.convertLatexToMathML(latexInput.value);
 			formula.drawImage(latexCanvas, mathml);
@@ -67,10 +67,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${additionalQuestionsRecordList}" var="additionalQuestionsRecord">
+				<c:forEach items="${additionalQuestionsRecordList}" var="additionalQuestionsRecord" varStatus="loop">
 					<tr>
-						<td class="text-center">${additionalQuestionsRecord.questionName}</td>
-						<td class="text-center">${additionalQuestionsRecord.markedAnswer}</td>
+						<td onmouseover="convertFromLatexToMathML('latex${loop.index +1}','latexCanvas${loop.index +1}')"><input type="hidden" id="latex${loop.index +1}"
+					value="${additionalQuestionsRecord.questionName}" style="width: 500px; height: 20px"></input>
+					<canvas id="latexCanvas${loop.index +1}" width="100px" height="20px"
+						style="border:0px solid #000000;"></canvas></td>
+						<%-- <td class="text-center">${additionalQuestionsRecord.questionName}</td> --%>
+						<td onmouseover="convertFromLatexToMathML('latex_answer${loop.index +1}','latexCanvas_answer${loop.index +1}')"><input type="hidden" id="latex_answer${loop.index +1}"
+					value="${additionalQuestionsRecord.markedAnswer}" style="width: 500px; height: 20px;"></input>
+					<canvas id="latexCanvas_answer${loop.index +1}" width="100px" height="20px" size="10px"
+						style="border:0px solid #000000;"></canvas></td>
+						<%-- <td class="text-center">${additionalQuestionsRecord.markedAnswer}</td> --%>
 						<td class="text-center"><fmt:formatDate value="${additionalQuestionsRecord.dateTime}" pattern="MM/dd/yyyy HH:mm:ss" /></td>
 						<td class="text-center">${additionalQuestionsRecord.result}</td>
 					</tr>

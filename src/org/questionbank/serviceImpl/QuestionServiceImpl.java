@@ -52,8 +52,8 @@ public class QuestionServiceImpl implements QuestionService
 			questionFormBean.setQuestionId(additionalQuestionDTO.getQuestionId().toString());
 			questionFormBean.setTypeId(additionalQuestionDTO.getType().getTypeId());
 			questionFormBean.setStatement(additionalQuestionDTO.getStatement());
-			wholeQuestion.append(additionalQuestionDTO.getStatement());
-			wholeQuestion.append("$ \\\\ $");
+			wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+additionalQuestionDTO.getStatement());
+			wholeQuestion.append(" $ \\\\ $");
 			optionList.put("1",additionalQuestionDTO.getOption1());
 			wholeQuestion.append("1. "+additionalQuestionDTO.getOption1()+" \\newline ");
 			optionList.put("2",additionalQuestionDTO.getOption2());
@@ -64,7 +64,7 @@ public class QuestionServiceImpl implements QuestionService
 			wholeQuestion.append("4. "+additionalQuestionDTO.getOption4()+" \\newline ");
 			optionList.put("5",additionalQuestionDTO.getOption5());
 			wholeQuestion.append("5. "+additionalQuestionDTO.getOption5()+" \\newline ");
-			wholeQuestion.append("$");
+			wholeQuestion.append(" $\\end{document} $");
 			questionFormBean.setOptionList(optionList);
 			questionFormBean.setWholeQuestion(wholeQuestion.toString());
 			questionFormBean.setSelectedOption(optionList.get("1"));
@@ -73,8 +73,8 @@ public class QuestionServiceImpl implements QuestionService
 		questionFormBean.setQuestionId(questionDTO.getQuestionId().toString());
 		questionFormBean.setTypeId(questionDTO.getType().getTypeId());
 		questionFormBean.setStatement(questionDTO.getStatement());
-		wholeQuestion.append(questionDTO.getStatement());
-		wholeQuestion.append("$ \\\\ $");
+		wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+questionDTO.getStatement());
+		wholeQuestion.append(" $ \\\\ $");
 		optionList.put("1",questionDTO.getOption1());
 		wholeQuestion.append("1. "+questionDTO.getOption1()+" \\newline ");
 		optionList.put("2",questionDTO.getOption2());
@@ -85,7 +85,7 @@ public class QuestionServiceImpl implements QuestionService
 		wholeQuestion.append("4. "+questionDTO.getOption4()+" \\newline ");
 		optionList.put("5",questionDTO.getOption5());
 		wholeQuestion.append("5. "+questionDTO.getOption5()+" \\newline ");
-		wholeQuestion.append("$");
+		wholeQuestion.append(" $\\end{document} $");
 		questionFormBean.setOptionList(optionList);
 		questionFormBean.setWholeQuestion(wholeQuestion.toString());
 		questionFormBean.setSelectedOption(optionList.get("1"));

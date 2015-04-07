@@ -92,8 +92,8 @@ public class AdminServiceImpl implements AdminService{
 		for(RightAttemptsDTO question : regularQuestionsListForRightAttempts)
 		{
 			RegularQuestionsRecordFormBean regularQuestionsRecord=new RegularQuestionsRecordFormBean();
-			regularQuestionsRecord.setQuestionName(question.getQuestionRegular().getStatement());
-			regularQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			regularQuestionsRecord.setQuestionName("$ \\documentclass[14pt]{report} $ $\\begin{document}$"+question.getQuestionRegular().getStatement()+" $\\end{document} $");
+			regularQuestionsRecord.setMarkedAnswer("$ \\documentclass[14pt]{report} $ $\\begin{document}$"+question.getSelectedAnswer()+" $\\end{document} $");
 			regularQuestionsRecord.setDateTime(question.getAttemptTime());
 			regularQuestionsRecord.setResult(true);
 			regularQuestionsRecordList.add(regularQuestionsRecord);
@@ -104,8 +104,8 @@ public class AdminServiceImpl implements AdminService{
 		{
 			RegularQuestionsRecordFormBean regularQuestionsRecord=new RegularQuestionsRecordFormBean();
 			
-			regularQuestionsRecord.setQuestionName(question.getQuestionRegular().getStatement());
-			regularQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			regularQuestionsRecord.setQuestionName("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getQuestionRegular().getStatement()+"  $\\end{document} $");
+			regularQuestionsRecord.setMarkedAnswer("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getSelectedAnswer()+"  $\\end{document} $");
 			regularQuestionsRecord.setDateTime(question.getAttemptTime());
 			regularQuestionsRecord.setResult(false);
 			regularQuestionsRecordList.add(regularQuestionsRecord);
@@ -125,8 +125,8 @@ public class AdminServiceImpl implements AdminService{
 		for(RightAttemptsDTO question : additionalQuestionsListForRightAttempts)
 		{
 			AdditionalQuestionsRecordFormBean additionalQuestionsRecord=new AdditionalQuestionsRecordFormBean();
-			additionalQuestionsRecord.setQuestionName(question.getQuestionAdditional().getStatement());
-			additionalQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			additionalQuestionsRecord.setQuestionName("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getQuestionAdditional().getStatement()+" $\\end{document} $");
+			additionalQuestionsRecord.setMarkedAnswer("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getSelectedAnswer()+" $\\end{document} $");
 			additionalQuestionsRecord.setDateTime(question.getAttemptTime());
 			additionalQuestionsRecord.setResult(true);
 			additionalQuestionsRecordList.add(additionalQuestionsRecord);
@@ -137,8 +137,8 @@ public class AdminServiceImpl implements AdminService{
 		{
 			AdditionalQuestionsRecordFormBean additionalQuestionsRecord=new AdditionalQuestionsRecordFormBean();
 			
-			additionalQuestionsRecord.setQuestionName(question.getQuestionAdditional().getStatement());
-			additionalQuestionsRecord.setMarkedAnswer(question.getSelectedAnswer());
+			additionalQuestionsRecord.setQuestionName("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getQuestionAdditional().getStatement()+" $\\end{document} $");
+			additionalQuestionsRecord.setMarkedAnswer("$ \\documentclass[14pt]{report} $ $\\begin{document} $"+question.getSelectedAnswer()+" $\\end{document} $");
 			additionalQuestionsRecord.setDateTime(question.getAttemptTime());
 			additionalQuestionsRecord.setResult(false);
 			additionalQuestionsRecordList.add(additionalQuestionsRecord);
