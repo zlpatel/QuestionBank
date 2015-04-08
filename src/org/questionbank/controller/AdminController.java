@@ -28,7 +28,6 @@ public class AdminController
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getAdminPage() {
 		logger.debug("Received request to show admin page");
-
 		return "adminpage";
 	}
 	@RequestMapping(value = "/studentsRecord", method = RequestMethod.GET)
@@ -38,8 +37,9 @@ public class AdminController
 		try {
 			recordList = adminService.getStudentsRecord();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("adminerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		} 
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("studentsrecord");
@@ -56,8 +56,9 @@ public class AdminController
 			studentName = adminService.getStudentName(userName);
 			recordList=adminService.getCategoricalRecord(userName);
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("adminerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		mav.addObject("recordList", recordList);
 		mav.addObject("studentName", studentName);
@@ -74,8 +75,9 @@ public class AdminController
 			studentName = adminService.getStudentName(userName);
 			recordList=adminService.getRegularQuestionsRecord(userName);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("adminerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		mav.addObject("regularQuestionsRecordList", recordList);
 		mav.addObject("studentName", studentName);
@@ -92,8 +94,9 @@ public class AdminController
 			studentName = adminService.getStudentName(userName);
 			recordList=adminService.getAdditionalQuestionsRecord(userName);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("adminerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		mav.addObject("additionalQuestionsRecordList", recordList);
 		mav.addObject("studentName", studentName);

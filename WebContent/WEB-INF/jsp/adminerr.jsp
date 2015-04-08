@@ -1,25 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Question Bank</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Student Record</title>
 <!-- Latest compiled and minified CSS -->
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap.min.css">
-
 <!-- Optional theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/externalresources/questionbank.css">
-
+	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
+	
 <!-- Latest compiled and minified JavaScript -->
-<script
+<script type="text/JavaScript"
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
+<!-- Latex to image -->
+
 </head>
 <body>
 	<center>
@@ -30,14 +32,16 @@
 	</center>
 
 	<nav class="navbar navbar-default navbar-static-top">
-	<ul class="nav navbar-nav">
+<ul class="nav navbar-nav">
 		<li><a href="home">Home</a></li>
-		<li class="active"><a href="#">Solve Questions</a></li>
+		<li class="active"><a href="#">Students Record</a></li>
 		<li><a href="javascript:formSubmit()">Logout</a></li>
 	</ul>
 	</nav>
 	<br>
+	${message}
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+
 	<!-- csrf for log out-->
 	<form action="${logoutUrl}" method="post" id="logoutForm">
 		<input type="hidden" name="${_csrf.parameterName}"
@@ -49,24 +53,5 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-	<h2>${question.message}</h2>
-	<h2>Thank you for taking the test.</h2>
-	<c:choose>
-		<c:when test="${question.typeId == 1}">
-			<h2>Below is a video with explanation of the answer!</h2>
-			<video width="400" controls> <source
-				src="${question.videoLink}" type="video/mp4"> Your browser does not support HTML5 video. </video>
-		</c:when>
-	</c:choose>
-	<c:choose>
-		<c:when test="${question.correct}">
-			<h2>Do you want to answer more questions?</h2>
-		</c:when>
-		<c:otherwise>
-			<h2>Do you want to try again?</h2>
-		</c:otherwise>
-	</c:choose>
-	<a href="choice/true">YES</a>
-	<a href="home">NO</a>
 </body>
 </html>

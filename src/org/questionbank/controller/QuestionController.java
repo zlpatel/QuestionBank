@@ -3,6 +3,9 @@ package org.questionbank.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
+import org.questionbank.exception.NoAdditionalQuestionAvailableException;
+import org.questionbank.exception.NoAssignedQuestionException;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +35,29 @@ public class QuestionController
 		QuestionFormBean question=null;
 		try {
 			question = questionService.getAQuestion(userName);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch(NoAssignedQuestionException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch(NoAdditionalQuestionAvailableException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch(AllAdditionalQuestionAnsweredException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch (Exception e) {
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		ModelAndView model=new ModelAndView("questionpage");
 		model.addObject("optionList", question.getOptionList());
@@ -52,16 +75,18 @@ public class QuestionController
 		try {
 			videoLink = questionService.getVideoLink(question);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		question.setVideoLink(videoLink);
 		boolean result=false;
 		try {
 			result = questionService.checkAnswer(question,userName);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
 		}
 		question.setCorrect(result);
 		if(result)
@@ -81,5 +106,4 @@ public class QuestionController
 		else
 			return "userpage";
 	}
-	
 }
