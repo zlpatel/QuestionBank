@@ -25,8 +25,9 @@ public class QuestionServiceImpl implements QuestionService
 	@Autowired
 	private UserDAO userDAO; 
 	
+	@Transactional
 	@Override
-	public QuestionFormBean getAQuestion(String userName) 
+	public QuestionFormBean getAQuestion(String userName) throws Exception
 	{
 		boolean isAlreadyAnsweredCorrectly=true;
 		logger.debug("Request to find a question in QuestionService");
@@ -38,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService
 		if(questionDTO!=null)
 			isAlreadyAnsweredCorrectly=questionDAO.checkInRightAttempted(userName,questionDTO.getQuestionId());
 		else
-			throw new RuntimeException("No assigned question found!");
+			throw new Exception("No assigned question found!");
 		if(isAlreadyAnsweredCorrectly)
 		{
 			AdditionalQuestionLookupDTO AQlookUpDTO=questionDAO.checkIfLookUpTableIsEmpty(userName);
@@ -92,8 +93,9 @@ public class QuestionServiceImpl implements QuestionService
 		return questionFormBean;
 			
 	}
+	@Transactional
 	@Override
-	public boolean checkAnswer(QuestionFormBean question,String userName) 
+	public boolean checkAnswer(QuestionFormBean question,String userName) throws Exception
 	{	
 		RegularQuestionDTO questionDTO;
 		AdditionalQuestionDTO additionalQuestionDTO;
@@ -122,16 +124,13 @@ public class QuestionServiceImpl implements QuestionService
 				return false;
 			}
 		}
-		
-		
-		
 	}
+	@Transactional
 	@Override
-	public String getVideoLink(QuestionFormBean question) {
+	public String getVideoLink(QuestionFormBean question) throws Exception{
 		if(question.getTypeId()==2)
 			return null;
 		String videoLink=questionDAO.getVideoLink(question.getQuestionId());
 		return videoLink;
 	}
-	
 }

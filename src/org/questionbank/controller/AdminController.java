@@ -34,7 +34,13 @@ public class AdminController
 	@RequestMapping(value = "/studentsRecord", method = RequestMethod.GET)
 	public ModelAndView getStudentsRecord() {
 		logger.debug("Received request to all student record");
-		List<StudentsRecordFormBean> recordList= adminService.getStudentsRecord(); 
+		List<StudentsRecordFormBean> recordList =null;
+		try {
+			recordList = adminService.getStudentsRecord();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("studentsrecord");
 		mav.addObject("recordList",recordList);
@@ -44,8 +50,15 @@ public class AdminController
 	public ModelAndView getSingleStudentCategoricalDetails(@PathVariable String userName) {
 		logger.debug("Received request to show single student record based on category");
 		ModelAndView mav=new ModelAndView();
-		String studentName=adminService.getStudentName(userName);
-		List<CategoricalRecordFormBean> recordList=adminService.getCategoricalRecord(userName);
+		String studentName=null;
+		List<CategoricalRecordFormBean> recordList=null;
+		try {
+			studentName = adminService.getStudentName(userName);
+			recordList=adminService.getCategoricalRecord(userName);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mav.addObject("recordList", recordList);
 		mav.addObject("studentName", studentName);
 		mav.setViewName("categoricalrecord");
@@ -55,8 +68,15 @@ public class AdminController
 	public ModelAndView getSingleStudentRegularQuestionsDetails(@PathVariable String userName) {
 		logger.debug("Received request to show single student record for Regular Questions");
 		ModelAndView mav=new ModelAndView();
-		String studentName=adminService.getStudentName(userName);
-		List<RegularQuestionsRecordFormBean> recordList=adminService.getRegularQuestionsRecord(userName);
+		String studentName=null;
+		List<RegularQuestionsRecordFormBean> recordList=null;
+		try {
+			studentName = adminService.getStudentName(userName);
+			recordList=adminService.getRegularQuestionsRecord(userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mav.addObject("regularQuestionsRecordList", recordList);
 		mav.addObject("studentName", studentName);
 		mav.setViewName("regularquestionsrecord");
@@ -65,10 +85,16 @@ public class AdminController
 	@RequestMapping(value = "/additionalQuestionsRecords/{userName}", method = RequestMethod.POST)
 	public ModelAndView getSingleStudentAdditionalQuestionsDetails(@PathVariable String userName) {
 		logger.debug("Received request to show single student record for Additional Questions");
-		//TODO:
 		ModelAndView mav=new ModelAndView();
-		String studentName=adminService.getStudentName(userName);
-		List<AdditionalQuestionsRecordFormBean> recordList=adminService.getAdditionalQuestionsRecord(userName);
+		String studentName=null;
+		List<AdditionalQuestionsRecordFormBean> recordList=null;
+		try {
+			studentName = adminService.getStudentName(userName);
+			recordList=adminService.getAdditionalQuestionsRecord(userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mav.addObject("additionalQuestionsRecordList", recordList);
 		mav.addObject("studentName", studentName);
 		mav.setViewName("additionalquestionsrecord");
