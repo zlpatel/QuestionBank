@@ -1,5 +1,6 @@
 package org.questionbank.serviceImpl;
 
+import java.util.Date;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,10 @@ import org.questionbank.dto.AdditionalQuestionDTO;
 import org.questionbank.dto.AdditionalQuestionLookupDTO;
 import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.UserDTO;
+import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
+import org.questionbank.exception.NoAdditionalQuestionAvailableException;
+import org.questionbank.exception.NoAssignedQuestionException;
+import org.questionbank.exception.QuestinExpiredException;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService
 	
 	@Transactional
 	@Override
-	public QuestionFormBean getAQuestion(String userName) throws Exception
+	public QuestionFormBean getAQuestion(String userName) throws NoAdditionalQuestionAvailableException,NoAssignedQuestionException,AllAdditionalQuestionAnsweredException,Exception
 	{
 		boolean isAlreadyAnsweredCorrectly=true;
 		logger.debug("Request to find a question in QuestionService");
@@ -103,6 +108,8 @@ public class QuestionServiceImpl implements QuestionService
 		if(question.getTypeId()==1)
 		{
 			questionDTO= (RegularQuestionDTO)questionDAO.getThisRegularQuestion(question.getQuestionId());
+			if(questionDTO.getAssignedDate().before(new Date()))
+				throw new QuestinExpiredException("The question has Expired!");
 			if(question.getSelectedOption().equals(questionDTO.getAnswer())) {
 				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;

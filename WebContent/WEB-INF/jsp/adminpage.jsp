@@ -11,7 +11,6 @@
 	
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
-	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
 	
 	<!-- Latest compiled and minified JavaScript -->
