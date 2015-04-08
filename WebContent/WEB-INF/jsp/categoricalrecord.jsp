@@ -14,7 +14,6 @@
 <!-- Optional theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
-	
 <link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
 	
 <!-- Latest compiled and minified JavaScript -->
@@ -24,7 +23,7 @@
 </head>
 <body>
 <center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
-<center><h4>Hi, ${USERNAME}</h4></center>
+<center><h4>Hi! ${USERNAME}</h4></center>
 
 <nav class="navbar navbar-default navbar-static-top">
 <ul class="nav navbar-nav">

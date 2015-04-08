@@ -25,8 +25,9 @@ public class QuestionServiceImpl implements QuestionService
 	@Autowired
 	private UserDAO userDAO; 
 	
+	@Transactional
 	@Override
-	public QuestionFormBean getAQuestion(String userName) 
+	public QuestionFormBean getAQuestion(String userName) throws Exception
 	{
 		boolean isAlreadyAnsweredCorrectly=true;
 		logger.debug("Request to find a question in QuestionService");
@@ -38,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService
 		if(questionDTO!=null)
 			isAlreadyAnsweredCorrectly=questionDAO.checkInRightAttempted(userName,questionDTO.getQuestionId());
 		else
-			throw new RuntimeException("No assigned question found!");
+			throw new Exception("No assigned question found!");
 		if(isAlreadyAnsweredCorrectly)
 		{
 			AdditionalQuestionLookupDTO AQlookUpDTO=questionDAO.checkIfLookUpTableIsEmpty(userName);
@@ -52,8 +53,8 @@ public class QuestionServiceImpl implements QuestionService
 			questionFormBean.setQuestionId(additionalQuestionDTO.getQuestionId().toString());
 			questionFormBean.setTypeId(additionalQuestionDTO.getType().getTypeId());
 			questionFormBean.setStatement(additionalQuestionDTO.getStatement());
-			wholeQuestion.append(additionalQuestionDTO.getStatement());
-			wholeQuestion.append("$ \\\\ $");
+			wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+additionalQuestionDTO.getStatement());
+			wholeQuestion.append(" $ \\\\ $");
 			optionList.put("1",additionalQuestionDTO.getOption1());
 			wholeQuestion.append("1. "+additionalQuestionDTO.getOption1()+" \\newline ");
 			optionList.put("2",additionalQuestionDTO.getOption2());
@@ -64,7 +65,7 @@ public class QuestionServiceImpl implements QuestionService
 			wholeQuestion.append("4. "+additionalQuestionDTO.getOption4()+" \\newline ");
 			optionList.put("5",additionalQuestionDTO.getOption5());
 			wholeQuestion.append("5. "+additionalQuestionDTO.getOption5()+" \\newline ");
-			wholeQuestion.append("$");
+			wholeQuestion.append(" $\\end{document} $");
 			questionFormBean.setOptionList(optionList);
 			questionFormBean.setWholeQuestion(wholeQuestion.toString());
 			questionFormBean.setSelectedOption(optionList.get("1"));
@@ -73,8 +74,8 @@ public class QuestionServiceImpl implements QuestionService
 		questionFormBean.setQuestionId(questionDTO.getQuestionId().toString());
 		questionFormBean.setTypeId(questionDTO.getType().getTypeId());
 		questionFormBean.setStatement(questionDTO.getStatement());
-		wholeQuestion.append(questionDTO.getStatement());
-		wholeQuestion.append("$ \\\\ $");
+		wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+questionDTO.getStatement());
+		wholeQuestion.append(" $ \\\\ $");
 		optionList.put("1",questionDTO.getOption1());
 		wholeQuestion.append("1. "+questionDTO.getOption1()+" \\newline ");
 		optionList.put("2",questionDTO.getOption2());
@@ -85,15 +86,16 @@ public class QuestionServiceImpl implements QuestionService
 		wholeQuestion.append("4. "+questionDTO.getOption4()+" \\newline ");
 		optionList.put("5",questionDTO.getOption5());
 		wholeQuestion.append("5. "+questionDTO.getOption5()+" \\newline ");
-		wholeQuestion.append("$");
+		wholeQuestion.append(" $\\end{document} $");
 		questionFormBean.setOptionList(optionList);
 		questionFormBean.setWholeQuestion(wholeQuestion.toString());
 		questionFormBean.setSelectedOption(optionList.get("1"));
 		return questionFormBean;
 			
 	}
+	@Transactional
 	@Override
-	public boolean checkAnswer(QuestionFormBean question,String userName) 
+	public boolean checkAnswer(QuestionFormBean question,String userName) throws Exception
 	{	
 		RegularQuestionDTO questionDTO;
 		AdditionalQuestionDTO additionalQuestionDTO;
@@ -102,11 +104,11 @@ public class QuestionServiceImpl implements QuestionService
 		{
 			questionDTO= (RegularQuestionDTO)questionDAO.getThisRegularQuestion(question.getQuestionId());
 			if(question.getSelectedOption().equals(questionDTO.getAnswer())) {
-				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(), user);
+				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;
 			}
 			else{
-				questionDAO.markAsWrongAttemptedRegular(question.getQuestionId(), user);
+				questionDAO.markAsWrongAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return false;
 			}
 		}
@@ -114,24 +116,21 @@ public class QuestionServiceImpl implements QuestionService
 		{
 			additionalQuestionDTO= (AdditionalQuestionDTO)questionDAO.getThisAdditionalQuestion(question.getQuestionId());
 			if(question.getSelectedOption().equals(additionalQuestionDTO.getAnswer())) {
-				questionDAO.markAsRightAttemptedAdditional(question.getQuestionId(), user);
+				questionDAO.markAsRightAttemptedAdditional(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;
 			}
 			else{
-				questionDAO.markAsWrongAttemptedAdditional(question.getQuestionId(), user);
+				questionDAO.markAsWrongAttemptedAdditional(question.getQuestionId(),question.getSelectedOption(), user);
 				return false;
 			}
 		}
-		
-		
-		
 	}
+	@Transactional
 	@Override
-	public String getVideoLink(QuestionFormBean question) {
+	public String getVideoLink(QuestionFormBean question) throws Exception{
 		if(question.getTypeId()==2)
 			return null;
 		String videoLink=questionDAO.getVideoLink(question.getQuestionId());
 		return videoLink;
 	}
-	
 }

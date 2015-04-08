@@ -34,16 +34,16 @@ protected static Logger logger = Logger.getLogger("service");
  
 	@Transactional(readOnly=true)
 	@Override
-	public UserDetails loadUserByUsername(final String username) 
-               throws UsernameNotFoundException {
- 
-		org.questionbank.dto.UserDTO user = userDao.fetchUserByUserName(username);
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+ 		org.questionbank.dto.UserDTO user;
+		try {
+			user = userDao.fetchUserByUserName(username);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getAccess());
- 
-		return buildUserForAuthentication(user, authorities);
- 
- 
-	}
+ 		return buildUserForAuthentication(user, authorities);
+ 	}
  
 	private User buildUserForAuthentication(org.questionbank.dto.UserDTO user, 
 		List<GrantedAuthority> authorities) {
@@ -68,14 +68,15 @@ protected static Logger logger = Logger.getLogger("service");
  
 		return Result;
 	}
- 
+	@Transactional
 	@Override
-	public UserDAO getUserDao() {
+	public UserDAO getUserDao() throws Exception{
 		return userDao;
 	}
  
+	@Transactional
 	@Override
-	public void setUserDao(UserDAO userDao) {
+	public void setUserDao(UserDAO userDao) throws Exception{
 		this.userDao = userDao;
 	}
  

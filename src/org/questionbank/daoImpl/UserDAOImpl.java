@@ -22,27 +22,18 @@ public class UserDAOImpl implements UserDAO{
 	
 	//Method to retrieve user by a username
 	@Override
-	public UserDTO fetchUserByUserName(String username) {
+	public UserDTO fetchUserByUserName(String username) throws Exception{
 
 		Session session = null;
 		UserDTO user = null;
-		try {
-			session = sessionFactory.getCurrentSession();
-			user = (UserDTO)session.get(UserDTO.class, username);
-			return user;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return user;
-		}
-		finally{
-			
-		}
+		session = sessionFactory.getCurrentSession();
+		user = (UserDTO)session.get(UserDTO.class, username);
+		return user;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserDTO> getAllStudents() {
+	public List<UserDTO> getAllStudents() throws Exception{
 
 		List<UserDTO> students = null;
 		logger.debug("Request to get all students");
@@ -51,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserDTO getThisStudent(String userName) {
+	public UserDTO getThisStudent(String userName) throws Exception{
 		logger.debug("Request to find a given student in UserDAO");
 		UserDTO userDTO=new UserDTO(); 
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserDTO u WHERE u.userName = :userName");
@@ -60,6 +51,6 @@ public class UserDAOImpl implements UserDAO{
 		if(userDTO!=null)
 			return userDTO;
 		logger.error("Student does not exist!");
-		throw new RuntimeException("Student does not exist!");
+		throw new Exception("Student does not exist!");
 	}
 }

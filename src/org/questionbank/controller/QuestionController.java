@@ -27,10 +27,16 @@ public class QuestionController
 	{
 		logger.debug("Received request to show question page");
 		
-		ModelAndView model=new ModelAndView("questionpage");
 		String userName=(String)session.getAttribute("USERNAME");
 		logger.debug(userName+" User logged in");
-		QuestionFormBean question=questionService.getAQuestion(userName);
+		QuestionFormBean question=null;
+		try {
+			question = questionService.getAQuestion(userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ModelAndView model=new ModelAndView("questionpage");
 		model.addObject("optionList", question.getOptionList());
 		model.addObject("wholeQuestion",question.getWholeQuestion());
 		model.addObject("command", question);
@@ -42,9 +48,21 @@ public class QuestionController
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
 		String userName=(String)session.getAttribute("USERNAME");
-		String videoLink=questionService.getVideoLink(question);
+		String videoLink=null;
+		try {
+			videoLink = questionService.getVideoLink(question);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		question.setVideoLink(videoLink);
-		boolean result=questionService.checkAnswer(question,userName);
+		boolean result=false;
+		try {
+			result = questionService.checkAnswer(question,userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		question.setCorrect(result);
 		if(result)
 			question.setMessage("Your answer is correct :D !!");
