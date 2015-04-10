@@ -20,7 +20,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CategoryDTO> getAllCategories() {
+	public List<CategoryDTO> getAllCategories() throws Exception{
 		logger.debug("Request to get list of all categories in CategoryDAO");
 		List<CategoryDTO> categories = null;
 		categories=sessionFactory.getCurrentSession().createCriteria(CategoryDTO.class).list();
@@ -28,7 +28,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 	}
 
 	@Override
-	public long getRightAttemptCount(String userName, Integer categoryId) {
+	public long getRightAttemptCount(String userName, Integer categoryId) throws Exception{
 		logger.debug("Request to get right attempt count for a given category and student in CategoryDAO");
 		Query query1 = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.user.userName = :userName and r.questionRegular.category.categoryId=:categoryId");
 		Query query2 = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.user.userName = :userName and r.questionAdditional.category.categoryId=:categoryId");
@@ -41,7 +41,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 	}
 
 	@Override
-	public long getWrongAttemptCount(String userName, Integer categoryId) {
+	public long getWrongAttemptCount(String userName, Integer categoryId) throws Exception{
 		logger.debug("Request to get right attempt count for a given category and student in CategoryDAO");
 		Query query1 = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM WrongAttemptsDTO w WHERE w.user.userName = :userName and w.questionRegular.category.categoryId=:categoryId");
 		Query query2 = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM WrongAttemptsDTO w WHERE w.user.userName = :userName and w.questionAdditional.category.categoryId=:categoryId");

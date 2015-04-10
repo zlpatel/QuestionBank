@@ -1,5 +1,6 @@
 package org.questionbank.serviceImpl;
 
+import java.util.Date;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,10 @@ import org.questionbank.dto.AdditionalQuestionDTO;
 import org.questionbank.dto.AdditionalQuestionLookupDTO;
 import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.UserDTO;
+import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
+import org.questionbank.exception.NoAdditionalQuestionAvailableException;
+import org.questionbank.exception.NoAssignedQuestionException;
+import org.questionbank.exception.QuestinExpiredException;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +30,9 @@ public class QuestionServiceImpl implements QuestionService
 	@Autowired
 	private UserDAO userDAO; 
 	
+	@Transactional
 	@Override
-	public QuestionFormBean getAQuestion(String userName) 
+	public QuestionFormBean getAQuestion(String userName) throws NoAdditionalQuestionAvailableException,NoAssignedQuestionException,AllAdditionalQuestionAnsweredException,Exception
 	{
 		boolean isAlreadyAnsweredCorrectly=true;
 		logger.debug("Request to find a question in QuestionService");
@@ -38,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService
 		if(questionDTO!=null)
 			isAlreadyAnsweredCorrectly=questionDAO.checkInRightAttempted(userName,questionDTO.getQuestionId());
 		else
-			throw new RuntimeException("No assigned question found!");
+			throw new Exception("No assigned question found!");
 		if(isAlreadyAnsweredCorrectly)
 		{
 			AdditionalQuestionLookupDTO AQlookUpDTO=questionDAO.checkIfLookUpTableIsEmpty(userName);
@@ -92,8 +98,9 @@ public class QuestionServiceImpl implements QuestionService
 		return questionFormBean;
 			
 	}
+	@Transactional
 	@Override
-	public boolean checkAnswer(QuestionFormBean question,String userName) 
+	public boolean checkAnswer(QuestionFormBean question,String userName) throws Exception
 	{	
 		RegularQuestionDTO questionDTO;
 		AdditionalQuestionDTO additionalQuestionDTO;
@@ -101,6 +108,8 @@ public class QuestionServiceImpl implements QuestionService
 		if(question.getTypeId()==1)
 		{
 			questionDTO= (RegularQuestionDTO)questionDAO.getThisRegularQuestion(question.getQuestionId());
+			if(questionDTO.getAssignedDate().before(new Date()))
+				throw new QuestinExpiredException("The question has Expired!");
 			if(question.getSelectedOption().equals(questionDTO.getAnswer())) {
 				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);
 				return true;
@@ -122,16 +131,13 @@ public class QuestionServiceImpl implements QuestionService
 				return false;
 			}
 		}
-		
-		
-		
 	}
+	@Transactional
 	@Override
-	public String getVideoLink(QuestionFormBean question) {
+	public String getVideoLink(QuestionFormBean question) throws Exception{
 		if(question.getTypeId()==2)
 			return null;
 		String videoLink=questionDAO.getVideoLink(question.getQuestionId());
 		return videoLink;
 	}
-	
 }

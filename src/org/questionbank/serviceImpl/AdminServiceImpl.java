@@ -33,8 +33,9 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
+	@Transactional
 	@Override
-	public List<StudentsRecordFormBean> getStudentsRecord() {
+	public List<StudentsRecordFormBean> getStudentsRecord() throws Exception{
 		logger.debug("Received request get all student records in admin service");
 		long rightAttemptCount;
 		long wrongAttemptCount;
@@ -53,16 +54,18 @@ public class AdminServiceImpl implements AdminService{
 		}
 		return studentsRecord;
 	}
-
+	
+	@Transactional
 	@Override
-	public String getStudentName(String userName) {
+	public String getStudentName(String userName) throws Exception {
 		logger.debug("Received request get a given student record in admin service");
 		UserDTO user=userDAO.getThisStudent(userName);
 		return user.getName();
 	}
 
+	@Transactional
 	@Override
-	public List<CategoricalRecordFormBean> getCategoricalRecord(String userName) {
+	public List<CategoricalRecordFormBean> getCategoricalRecord(String userName) throws Exception{
 		logger.debug("Received request get categorical records in admin service");
 		long rightAttemptCount;
 		long wrongAttemptCount;
@@ -82,9 +85,10 @@ public class AdminServiceImpl implements AdminService{
 		return categoricalRecordList;
 	}
 
+	@Transactional
 	@Override
 	public List<RegularQuestionsRecordFormBean> getRegularQuestionsRecord(
-			String userName) {
+			String userName) throws Exception{
 		logger.debug("Received request get regular questions records in admin service");
 		List<RegularQuestionsRecordFormBean> regularQuestionsRecordList=new ArrayList<RegularQuestionsRecordFormBean>();
 		List<RightAttemptsDTO> regularQuestionsListForRightAttempts=questionDAO.getQuestionsListForRightAttempts(userName,1);
@@ -115,9 +119,10 @@ public class AdminServiceImpl implements AdminService{
 		return regularQuestionsRecordList;
 	}
 
+	@Transactional
 	@Override
 	public List<AdditionalQuestionsRecordFormBean> getAdditionalQuestionsRecord(
-			String userName) {
+			String userName) throws Exception{
 		logger.debug("Received request get additional questions records in admin service");
 		List<AdditionalQuestionsRecordFormBean> additionalQuestionsRecordList=new ArrayList<AdditionalQuestionsRecordFormBean>();
 		List<RightAttemptsDTO> additionalQuestionsListForRightAttempts=questionDAO.getQuestionsListForRightAttempts(userName,2);

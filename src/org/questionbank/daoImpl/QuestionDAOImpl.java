@@ -15,6 +15,9 @@ import org.questionbank.dto.RegularQuestionDTO;
 import org.questionbank.dto.RightAttemptsDTO;
 import org.questionbank.dto.UserDTO;
 import org.questionbank.dto.WrongAttemptsDTO;
+import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
+import org.questionbank.exception.NoAdditionalQuestionAvailableException;
+import org.questionbank.exception.NoAssignedQuestionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +28,7 @@ public class QuestionDAOImpl implements QuestionDAO
 	private SessionFactory sessionFactory;
 	protected static Logger logger = Logger.getLogger("dao");
 
-	public boolean checkInRightAttempted(String userName,Integer questionId) 
+	public boolean checkInRightAttempted(String userName,Integer questionId) throws Exception
 	{
 		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.questionRegular.questionId = :questionId and r.user.userName = :userName");
 		query.setString("questionId", questionId.toString());
@@ -37,43 +40,28 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public Integer getNumberOfQuestions() 
-	{
-		logger.debug("Request to find number of questions");
-		Query query = sessionFactory.getCurrentSession().createQuery("SELECT COUNT(q) FROM RegularQuestionDTO q");
-		Long qouestionCount = (Long)query.uniqueResult();
-		Integer i = (int) (long) qouestionCount;
-		return i;
-	}
-    @Override
-	public RegularQuestionDTO getThisRegularQuestion(String questionId) 
+	public RegularQuestionDTO getThisRegularQuestion(String questionId) throws Exception 
 	{
 		logger.debug("Request to find a given question in QuestionDAO");
 		RegularQuestionDTO questionDTO=new RegularQuestionDTO(); 
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM RegularQuestionDTO q WHERE q.questionId = :questionId");
 		query.setString("questionId", questionId);
 		questionDTO = (RegularQuestionDTO) query.uniqueResult();
-		if(questionDTO!=null)
-			return questionDTO;
-		logger.error("Question does not exist!");
-		throw new RuntimeException("Question does not exist!");
+		return questionDTO;
+		
 	}
     @Override
-    public AdditionalQuestionDTO getThisAdditionalQuestion(String questionId) 
+    public AdditionalQuestionDTO getThisAdditionalQuestion(String questionId) throws Exception
 	{
 		logger.debug("Request to find a given question in QuestionDAO");
 		AdditionalQuestionDTO questionDTO=new AdditionalQuestionDTO(); 
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO q WHERE q.questionId = :questionId");
 		query.setString("questionId", questionId);
 		questionDTO = (AdditionalQuestionDTO) query.uniqueResult();
-		if(questionDTO!=null)
-			return questionDTO;
-		logger.error("Question does not exist!");
-		throw new RuntimeException("Question does not exist!");
+		return questionDTO;
 	}
-
 	@Override
-	public void markAsRightAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) {
+	public void markAsRightAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) throws Exception {
 		logger.debug("Marking the question as Right Attempt");
 		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
 		java.util.Date date= new java.util.Date();
@@ -86,7 +74,7 @@ public class QuestionDAOImpl implements QuestionDAO
 		sessionFactory.getCurrentSession().save(rightAttempt);
 	}
 	@Override
-	public void markAsRightAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) {
+	public void markAsRightAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) throws Exception{
 		logger.debug("Marking the question as Right Attempt");
 		RightAttemptsDTO rightAttempt=new RightAttemptsDTO();
 		java.util.Date date= new java.util.Date();
@@ -102,9 +90,8 @@ public class QuestionDAOImpl implements QuestionDAO
 		lookUp.setUser(user);
 		sessionFactory.getCurrentSession().saveOrUpdate(lookUp);
 	}
-
 	@Override
-	public void markAsWrongAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) {
+	public void markAsWrongAttemptedRegular(String questionId,String selectedAnswer, UserDTO user) throws Exception{
 		logger.debug("Marking the question as Wrong Attempt");
 		System.out.println("Selected Answer is :::: "+selectedAnswer);
 		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
@@ -120,7 +107,7 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public void markAsWrongAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) {
+	public void markAsWrongAttemptedAdditional(String questionId,String selectedAnswer, UserDTO user) throws Exception{
 		logger.debug("Marking the question as Wrong Attempt");
 		WrongAttemptsDTO wrongAttempt = new WrongAttemptsDTO();
 		wrongAttempt=new WrongAttemptsDTO();
@@ -136,7 +123,7 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public RegularQuestionDTO getTodaysQuestion() {
+	public RegularQuestionDTO getTodaysQuestion() throws NoAssignedQuestionException,Exception{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
 		// get the assigned question for today
@@ -144,11 +131,14 @@ public class QuestionDAOImpl implements QuestionDAO
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM RegularQuestionDTO q WHERE q.assignedDate = :assignedDate");
 		query.setString("assignedDate", dateFormat.format(date));
 		questionDTO = (RegularQuestionDTO) query.uniqueResult();
-		return questionDTO;
+		if(questionDTO!=null)
+			return questionDTO;
+		logger.error("Question assigneed for today!");
+		throw new NoAssignedQuestionException("No Question assigneed for today!");
 	}
 
 	@Override
-	public AdditionalQuestionLookupDTO checkIfLookUpTableIsEmpty(String userName) {
+	public AdditionalQuestionLookupDTO checkIfLookUpTableIsEmpty(String userName) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionLookupDTO aql WHERE aql.user.userName = :userName");
 		query.setString("userName", userName);
 		AdditionalQuestionLookupDTO AQlookUpDTO= (AdditionalQuestionLookupDTO) query.uniqueResult();
@@ -156,7 +146,7 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public AdditionalQuestionDTO getNextAdditionalQuestion(AdditionalQuestionLookupDTO AQlookUpDTO, String userName) {
+	public AdditionalQuestionDTO getNextAdditionalQuestion(AdditionalQuestionLookupDTO AQlookUpDTO, String userName) throws AllAdditionalQuestionAnsweredException,Exception{
 		Integer nextQuestionId;
 		nextQuestionId=AQlookUpDTO.getQuestion().getQuestionId() + 1;
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO aq WHERE aq.questionId = :questionId");
@@ -165,22 +155,22 @@ public class QuestionDAOImpl implements QuestionDAO
 		if(nextAditionalQuestion!=null)
 			return nextAditionalQuestion;
 		else
-			throw new RuntimeException("All additional questions already answered!");
+			throw new AllAdditionalQuestionAnsweredException("All additional questions already answered!");
 	}
 
 	@Override
-	public AdditionalQuestionDTO getFirstAdditionalQuestion() {
+	public AdditionalQuestionDTO getFirstAdditionalQuestion() throws NoAdditionalQuestionAvailableException,Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM AdditionalQuestionDTO aq WHERE aq.questionId = :questionId");
 		query.setString("questionId", new Integer(1).toString());
 		AdditionalQuestionDTO firstAditionalQuestion= (AdditionalQuestionDTO) query.uniqueResult();
 		if(firstAditionalQuestion!=null)
 			return firstAditionalQuestion;
 		else
-			throw new RuntimeException("No additional questions added!");
+			throw new NoAdditionalQuestionAvailableException("No additional questions added!");
 	}
 
 	@Override
-	public String getVideoLink(String questionId) {
+	public String getVideoLink(String questionId) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("SELECT q.videoLink FROM RegularQuestionDTO q WHERE q.questionId = :questionId");
 		query.setString("questionId", questionId);
 		String videoLink = (String) query.uniqueResult();
@@ -188,38 +178,43 @@ public class QuestionDAOImpl implements QuestionDAO
 	}
 
 	@Override
-	public long getRightAttemptCount(String userName) {
+	public long getRightAttemptCount(String userName) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM RightAttemptsDTO r WHERE r.user.userName = :userName");
 		query.setString("userName", userName);
 		long count = (Long) query.uniqueResult();
 		return count;
 	}
-
 	@Override
-	public long getWrongAttemptCount(String userName) {
+	public long getWrongAttemptCount(String userName) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM WrongAttemptsDTO w WHERE w.user.userName = :userName");
 		query.setString("userName", userName);
 		long count = (Long) query.uniqueResult();
 		return count;
 	}
-
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<RightAttemptsDTO> getQuestionsListForRightAttempts(String userName, int questionType) {
+	public List<RightAttemptsDTO> getQuestionsListForRightAttempts(String userName, int questionType) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM RightAttemptsDTO r WHERE r.user.userName = :userName and r.type.typeId = :typeId");
 		query.setString("userName", userName);
 		query.setInteger("typeId", questionType);
 		List<RightAttemptsDTO> list=query.list();
 		return list;
 	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<WrongAttemptsDTO> getQuestionsListForWrongAttempts(String userName, int questionType) {
+	public List<WrongAttemptsDTO> getQuestionsListForWrongAttempts(String userName, int questionType) throws Exception{
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM WrongAttemptsDTO w WHERE w.user.userName = :userName and w.type.typeId = :typeId");
 		query.setString("userName", userName);
 		query.setInteger("typeId", questionType);
 		List<WrongAttemptsDTO> list=query.list();
 		return list;
+	}
+	@Override
+	public Integer getNumberOfQuestions() throws Exception {
+		logger.debug("Request to find number of questions");
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT COUNT(q) FROM RegularQuestionDTO q");
+		Long qouestionCount = (Long)query.uniqueResult();
+		Integer i = (int) (long) qouestionCount;
+		return i;
 	}
 }

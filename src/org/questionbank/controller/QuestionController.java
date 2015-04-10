@@ -3,6 +3,9 @@ package org.questionbank.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
+import org.questionbank.exception.NoAdditionalQuestionAvailableException;
+import org.questionbank.exception.NoAssignedQuestionException;
 import org.questionbank.form.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,33 @@ public class QuestionController
 		
 		String userName=(String)session.getAttribute("USERNAME");
 		logger.debug(userName+" User logged in");
-		QuestionFormBean question=questionService.getAQuestion(userName);
+		QuestionFormBean question=null;
+		try {
+			question = questionService.getAQuestion(userName);
+		} 
+		catch(NoAssignedQuestionException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch(NoAdditionalQuestionAvailableException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch(AllAdditionalQuestionAnsweredException e)
+		{
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			return model;
+		}
+		catch (Exception e) {
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
+		}
 		ModelAndView model=new ModelAndView("questionpage");
 		model.addObject("optionList", question.getOptionList());
 		model.addObject("wholeQuestion",question.getWholeQuestion());
@@ -42,9 +71,23 @@ public class QuestionController
 		logger.debug("Question page subimtted");
 		ModelAndView mav=new ModelAndView();
 		String userName=(String)session.getAttribute("USERNAME");
-		String videoLink=questionService.getVideoLink(question);
+		String videoLink=null;
+		try {
+			videoLink = questionService.getVideoLink(question);
+		} catch (Exception e) {
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
+		}
 		question.setVideoLink(videoLink);
-		boolean result=questionService.checkAnswer(question,userName);
+		boolean result=false;
+		try {
+			result = questionService.checkAnswer(question,userName);
+		} catch (Exception e) {
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", "Something went wrong, please try again later!");
+			return model;
+		}
 		question.setCorrect(result);
 		if(result)
 			question.setMessage("Your answer is correct :D !!");
@@ -63,5 +106,4 @@ public class QuestionController
 		else
 			return "userpage";
 	}
-	
 }
