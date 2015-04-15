@@ -71,8 +71,8 @@ public class RegularQuestionDTO implements Serializable
     private String answer;
     
     @Basic(optional = false)
-    @Column(name = "has_Image", nullable = false)
-    private boolean hasImage;
+    @Column(name = "image_name")
+    private String imageName;
     
     
     @Column(name = "video_link", nullable = true)
@@ -117,15 +117,15 @@ public class RegularQuestionDTO implements Serializable
 		this.videoLink = videoLink;
 	}
 
-	public boolean isHasImage() {
-		return hasImage;
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setHasImage(boolean hasImage) {
-		this.hasImage = hasImage;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
-    public Integer getQuestionId() {
+	public Integer getQuestionId() {
         return questionId;
     }
 

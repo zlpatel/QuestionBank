@@ -1,6 +1,6 @@
 package org.questionbank.service;
 
-import org.questionbank.form.QuestionFormBean;
+import org.questionbank.formbean.QuestionFormBean;
 
 public interface QuestionService 
 {

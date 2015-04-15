@@ -1,5 +1,7 @@
 package org.questionbank.serviceImpl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -14,7 +16,7 @@ import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
 import org.questionbank.exception.NoAdditionalQuestionAvailableException;
 import org.questionbank.exception.NoAssignedQuestionException;
 import org.questionbank.exception.QuestinExpiredException;
-import org.questionbank.form.QuestionFormBean;
+import org.questionbank.formbean.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,7 @@ public class QuestionServiceImpl implements QuestionService
 				additionalQuestionDTO=questionDAO.getFirstAdditionalQuestion();
 			}
 			questionFormBean.setQuestionId(additionalQuestionDTO.getQuestionId().toString());
+			questionFormBean.setImageName(additionalQuestionDTO.getImageName());
 			questionFormBean.setTypeId(additionalQuestionDTO.getType().getTypeId());
 			questionFormBean.setStatement(additionalQuestionDTO.getStatement());
 			wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+additionalQuestionDTO.getStatement());
@@ -77,6 +80,7 @@ public class QuestionServiceImpl implements QuestionService
 			return questionFormBean;
 		}
 		questionFormBean.setQuestionId(questionDTO.getQuestionId().toString());
+		questionFormBean.setImageName(questionDTO.getImageName());
 		questionFormBean.setTypeId(questionDTO.getType().getTypeId());
 		questionFormBean.setStatement(questionDTO.getStatement());
 		wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+questionDTO.getStatement());
@@ -100,7 +104,7 @@ public class QuestionServiceImpl implements QuestionService
 	}
 	@Transactional
 	@Override
-	public boolean checkAnswer(QuestionFormBean question,String userName) throws Exception
+	public boolean checkAnswer(QuestionFormBean question,String userName) throws QuestinExpiredException, Exception
 	{	
 		RegularQuestionDTO questionDTO;
 		AdditionalQuestionDTO additionalQuestionDTO;
@@ -108,7 +112,10 @@ public class QuestionServiceImpl implements QuestionService
 		if(question.getTypeId()==1)
 		{
 			questionDTO= (RegularQuestionDTO)questionDAO.getThisRegularQuestion(question.getQuestionId());
-			if(questionDTO.getAssignedDate().before(new Date()))
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			String todayDate=dateFormat.format(new Date());
+			String questionDate=dateFormat.format(questionDTO.getAssignedDate());
+			if(dateFormat.parse(questionDate).before(dateFormat.parse(todayDate)))
 				throw new QuestinExpiredException("The question has Expired!");
 			if(question.getSelectedOption().equals(questionDTO.getAnswer())) {
 				questionDAO.markAsRightAttemptedRegular(question.getQuestionId(),question.getSelectedOption(), user);

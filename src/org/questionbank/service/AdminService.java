@@ -2,10 +2,10 @@ package org.questionbank.service;
 
 import java.util.List;
 
-import org.questionbank.form.AdditionalQuestionsRecordFormBean;
-import org.questionbank.form.RegularQuestionsRecordFormBean;
-import org.questionbank.form.StudentsRecordFormBean;
-import org.questionbank.form.CategoricalRecordFormBean;
+import org.questionbank.formbean.AdditionalQuestionsRecordFormBean;
+import org.questionbank.formbean.CategoricalRecordFormBean;
+import org.questionbank.formbean.RegularQuestionsRecordFormBean;
+import org.questionbank.formbean.StudentsRecordFormBean;
 public interface AdminService {
 
 	List<StudentsRecordFormBean> getStudentsRecord() throws Exception;
