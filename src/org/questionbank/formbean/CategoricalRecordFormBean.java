@@ -1,4 +1,4 @@
-package org.questionbank.form;
+package org.questionbank.formbean;
 
 public class CategoricalRecordFormBean {
 	private String categoryName;

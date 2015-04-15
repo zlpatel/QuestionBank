@@ -6,7 +6,8 @@ import org.apache.log4j.Logger;
 import org.questionbank.exception.AllAdditionalQuestionAnsweredException;
 import org.questionbank.exception.NoAdditionalQuestionAvailableException;
 import org.questionbank.exception.NoAssignedQuestionException;
-import org.questionbank.form.QuestionFormBean;
+import org.questionbank.exception.QuestinExpiredException;
+import org.questionbank.formbean.QuestionFormBean;
 import org.questionbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,7 +84,12 @@ public class QuestionController
 		boolean result=false;
 		try {
 			result = questionService.checkAnswer(question,userName);
-		} catch (Exception e) {
+		}catch (QuestinExpiredException e) {
+			ModelAndView model=new ModelAndView("questionerr");
+			model.addObject("message", e.getMessage());
+			e.printStackTrace();
+			return model;
+		}catch (Exception e) {
 			ModelAndView model=new ModelAndView("questionerr");
 			model.addObject("message", "Something went wrong, please try again later!");
 			return model;

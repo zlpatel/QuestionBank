@@ -3,10 +3,10 @@ package org.questionbank.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.questionbank.form.AdditionalQuestionsRecordFormBean;
-import org.questionbank.form.CategoricalRecordFormBean;
-import org.questionbank.form.RegularQuestionsRecordFormBean;
-import org.questionbank.form.StudentsRecordFormBean;
+import org.questionbank.formbean.AdditionalQuestionsRecordFormBean;
+import org.questionbank.formbean.CategoricalRecordFormBean;
+import org.questionbank.formbean.RegularQuestionsRecordFormBean;
+import org.questionbank.formbean.StudentsRecordFormBean;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

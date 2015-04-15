@@ -38,7 +38,7 @@ CREATE TABLE questions(
 	option4 text NOT NULL,
 	option5 text NOT NULL,
 	answer text NOT NULL,
-	has_Image bool NOT NULL,
+	image_name text,
 	video_link text,
 	primary key (question_id),
 	FOREIGN KEY (category_id) 
@@ -48,9 +48,9 @@ CREATE TABLE questions(
         REFERENCES question_type(type_id)
         ON DELETE CASCADE
 );
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-07-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=5",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-08-2015', '%m-%d-%Y'),1,"\\frac{a}{b}  = \\frac{5}{2} ",1,"if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
-insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,has_Image,video_link) values(STR_TO_DATE('04-09-2015', '%m-%d-%Y'),1,"This is sample question 3",1,"option1","option2","option3","option4","option5","option3",false,"https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,image_name,video_link) values(STR_TO_DATE('04-15-2015', '%m-%d-%Y'),1,"x^{2}+2xy+ y^{2} =25",1,"x+y= \\pm 5","x-y=5","xy=5","x/y=5","x^{2}=5","x^{2}=5","DualGraph.jpg","https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,video_link) values(STR_TO_DATE('04-16-2015', '%m-%d-%Y'),1,"\\frac{a}{b}  = \\frac{5}{2} ",1,"if b=2, \\hspace{2 mm} then \\hspace{2 mm} a=78","if b=4, \\hspace{2 mm} then \\hspace{2 mm} a=6","if b=6, \\hspace{2 mm} then \\hspace{2 mm} a=25","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","none of the above","if b=8, \\hspace{2 mm} then \\hspace{2 mm} a=20","https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
+insert into questions (assigned_date, type_id, statement, category_id, option1, option2, option3, option4, option5, answer,video_link) values(STR_TO_DATE('04-17-2015', '%m-%d-%Y'),1,"This is sample question 3",1,"option1","option2","option3","option4","option5","option3","https://miro.asu.edu/videos/online/MAT265-dheckman/MAT265-1-2_CompositeGraph_ex1_0232.mp4");
 select * from questions;
 ALTER TABLE questions AUTO_INCREMENT=1;
 delete from questions;
@@ -70,7 +70,7 @@ CREATE table Additional_questions(
 	option4 text NOT NULL,
 	option5 text NOT NULL,
 	answer text NOT NULL,
-	has_Image bool NOT NULL, 
+	image_name text, 
 	primary key (question_id),
 	FOREIGN KEY (category_id) 
         REFERENCES category(category_id)
@@ -79,8 +79,8 @@ CREATE table Additional_questions(
         REFERENCES question_type(type_id)
         ON DELETE CASCADE
 );
-insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer,has_Image) values(2,"This is sample question 4",1,"option1","option2","option3","option4","option5","option3",false);
-insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer,has_Image) values(2,"This is sample question 5",1,"option1","option2","option3","option4","option5","option3",false);
+insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer,image_name) values(2,"This is sample question 4",1,"option1","option2","option3","option4","option5","option3","LimitGraph-210F2011Exam1.jpg");
+insert into Additional_questions (type_id,statement,category_id,option1,option2,option3,option4,option5,answer) values(2,"This is sample question 5",1,"option1","option2","option3","option4","option5","option3");
 ALTER TABLE Additional_questions AUTO_INCREMENT=1;
 select * from Additional_questions;
 delete from Additional_questions;

@@ -62,9 +62,9 @@ public class AdditionalQuestionDTO implements Serializable
     private String answer;
     
     @Basic(optional = false)
-    @Column(name = "has_Image", nullable = false)
-    private boolean hasImage;
-
+    @Column(name = "image_name")
+    private String imageName;
+    
     public AdditionalQuestionDTO() {
     }
 
@@ -99,19 +99,19 @@ public class AdditionalQuestionDTO implements Serializable
 		this.category = category;
 	}
 
-	public boolean isHasImage() {
-		return hasImage;
-	}
-
-	public void setHasImage(boolean hasImage) {
-		this.hasImage = hasImage;
-	}
-
-    public Integer getQuestionId() {
+	public Integer getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 

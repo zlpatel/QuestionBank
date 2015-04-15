@@ -1,4 +1,4 @@
-package org.questionbank.form;
+package org.questionbank.formbean;
 
 import java.util.TreeMap;
 
@@ -13,6 +13,7 @@ public class QuestionFormBean
 	private String wholeQuestion;
 	private boolean correct;
 	private String videoLink;
+	private String imageName;
 	
 	public String getVideoLink() {
 		return videoLink;
@@ -68,5 +69,10 @@ public class QuestionFormBean
 	public void setWholeQuestion(String wholeQuestion) {
 		this.wholeQuestion = wholeQuestion;
 	}
-	
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 }

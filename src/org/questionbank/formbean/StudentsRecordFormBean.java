@@ -1,4 +1,4 @@
-package org.questionbank.form;
+package org.questionbank.formbean;
 
 public class StudentsRecordFormBean {
 	private String studentName;
