@@ -13,4 +13,5 @@ public interface AdminService {
 	List<CategoricalRecordFormBean> getCategoricalRecord(String userName) throws Exception;
 	List<RegularQuestionsRecordFormBean> getRegularQuestionsRecord(String userName) throws Exception;
 	List<AdditionalQuestionsRecordFormBean> getAdditionalQuestionsRecord(String userName) throws Exception;
+	String getAdminName(String userName) throws Exception;
 }

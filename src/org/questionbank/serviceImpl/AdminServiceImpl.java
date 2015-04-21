@@ -62,7 +62,13 @@ public class AdminServiceImpl implements AdminService{
 		UserDTO user=userDAO.getThisStudent(userName);
 		return user.getName();
 	}
-
+	@Transactional
+	@Override
+	public String getAdminName(String userName) throws Exception {
+		logger.debug("Received request get admin name in admin service");
+		UserDTO user=userDAO.fetchUserByUserName(userName);
+		return user.getName();
+	}
 	@Transactional
 	@Override
 	public List<CategoricalRecordFormBean> getCategoricalRecord(String userName) throws Exception{

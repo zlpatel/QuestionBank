@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(catalog = "test", schema = "", name="RightAttempts")
+@Table(catalog = "questionbank", schema = "", name="RightAttempts")
 @XmlRootElement
 public class RightAttemptsDTO implements Serializable
 {

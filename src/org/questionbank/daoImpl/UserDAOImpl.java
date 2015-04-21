@@ -30,7 +30,6 @@ public class UserDAOImpl implements UserDAO{
 		user = (UserDTO)session.get(UserDTO.class, username);
 		return user;
 	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserDTO> getAllStudents() throws Exception{

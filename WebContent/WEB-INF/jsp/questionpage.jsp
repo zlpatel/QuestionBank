@@ -45,7 +45,7 @@
 		<h1 class="bg-primary">QUESTION BANK</h1>
 	</center>
 	<center>
-		<h4>Hi! ${USERNAME}</h4>
+		<h4>Hi, ${name}</h4>
 	</center>
 
 	<nav class="navbar navbar-default navbar-static-top">
@@ -68,13 +68,12 @@
 					value="${command.wholeQuestion}" style="width: 500px; height: 20px"></input>
 					<canvas id="latexCanvas" width="0" height="0"
 						style="border:0px solid #000000;"></canvas></td>
-				<td>
-					<c:choose>
+				<td><c:choose>
 						<c:when test="${not empty command.imageName}">
-							<img src="${pageContext.request.contextPath}/externalresources/images/${command.imageName}">
+							<img
+								src="${pageContext.request.contextPath}/externalresources/images/${command.imageName}">
 						</c:when>
-					</c:choose>
-				</td>
+					</c:choose></td>
 			</tr>
 			<tr>
 				<td><form:select element="li" path="selectedOption">

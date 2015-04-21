@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(catalog = "test", schema = "", name="Additional_questions_lookup")
+@Table(catalog = "questionbank", schema = "", name="Additional_questions_lookup")
 @XmlRootElement
 public class AdditionalQuestionLookupDTO implements Serializable 
 {

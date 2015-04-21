@@ -14,19 +14,27 @@
 <!-- Optional theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
-	
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/externalresources/questionbank.css">
+<link
+	href="${pageContext.request.contextPath}/externalresources/font-awesome-4.3.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/JavaScript"
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-<center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
-<center><h4>Hi! ${USERNAME}</h4></center>
+	<center>
+		<h1 class="bg-primary">QUESTION BANK</h1>
+	</center>
+	<center>
+		<h4>Hi, ${name}</h4>
+	</center>
 
-<nav class="navbar navbar-default navbar-static-top">
-<ul class="nav navbar-nav">
+	<nav class="navbar navbar-default navbar-static-top">
+	<ul class="nav navbar-nav">
 		<li><a href="../home">Home</a></li>
 		<li class="active"><a href="#">Students Record</a></li>
 		<li><a href="javascript:formSubmit()">Logout</a></li>
@@ -34,26 +42,27 @@
 	</nav>
 	<br>
 	<form:form method="GET">
-	Category-wise statistics for student: ${studentName}
+	<a class="fa fa-arrow-circle-left fa-1x btn btn-info" href="../studentsRecord">Back</a>
+	<center>Category-wise statistics for ${studentName}</center>
 		<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr class="success">
-					<th class="text-center">Category</th>
-					<th class="text-center">Right Attempts</th>
-					<th class="text-center">Wrong Attempts</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${recordList}" var="categoricalRecord">
-					<tr>
-						<td class="text-center">${categoricalRecord.categoryName}</td>
-						<td class="text-center">${categoricalRecord.rightAttemptCount}</td>
-						<td class="text-center">${categoricalRecord.wrongAttemptCount}</td>
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr class="success">
+						<th class="text-center">Category</th>
+						<th class="text-center">Right Attempts</th>
+						<th class="text-center">Wrong Attempts</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach items="${recordList}" var="categoricalRecord">
+						<tr>
+							<td class="text-center">${categoricalRecord.categoryName}</td>
+							<td class="text-center">${categoricalRecord.rightAttemptCount}</td>
+							<td class="text-center">${categoricalRecord.wrongAttemptCount}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</form:form>
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Home</title>
 <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap.min.css">
 	
@@ -19,7 +19,7 @@
 </head>
 <body>
 <center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
-<center><h4>Hi! ${USERNAME}</h4></center>
+<center><h4>Hi, ${name}</h4></center>
 
 <nav class="navbar navbar-default navbar-static-top">
 <ul class="nav navbar-nav">

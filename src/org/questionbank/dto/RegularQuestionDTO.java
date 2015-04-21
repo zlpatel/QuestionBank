@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(catalog = "test", schema = "", name="questions")
+@Table(catalog = "questionbank", schema = "", name="questions")
 @XmlRootElement
 public class RegularQuestionDTO implements Serializable 
 {
