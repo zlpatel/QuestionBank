@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Error</title>
+<title>Student Record</title>
 <!-- Latest compiled and minified CSS -->
 
 <link rel="stylesheet"
@@ -28,30 +28,6 @@
 	<center>
 		<h1 class="bg-primary">QUESTION BANK</h1>
 	</center>
-	<center>
-		<h4>Hi, ${name}</h4>
-	</center>
-
-	<nav class="navbar navbar-default navbar-static-top">
-	<ul class="nav navbar-nav">
-		<li><a href="home">Home</a></li>
-		<li class="active"><a href="#">Students Record</a></li>
-		<li><a href="javascript:formSubmit()">Logout</a></li>
-	</ul>
-	</nav>
-	<br> ${message}
-	<c:url value="/j_spring_security_logout" var="logoutUrl" />
-	<a class="btn btn-info" href="../studentsRecord">Back</a>
-	<!-- csrf for log out-->
-	<form action="${logoutUrl}" method="post" id="logoutForm">
-		<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
-	</form>
-
-	<script>
-		function formSubmit() {
-			document.getElementById("logoutForm").submit();
-		}
-	</script>
+	Something went wrong with system!
 </body>
 </html>

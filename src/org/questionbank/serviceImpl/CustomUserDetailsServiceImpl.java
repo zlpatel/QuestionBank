@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * This custom service must implement Spring's {@link UserDetailsService}
  */
-@Transactional(readOnly = true)
+@Transactional
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService,CustomUserDetailsService
 {
@@ -44,7 +44,12 @@ protected static Logger logger = Logger.getLogger("service");
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getAccess());
  		return buildUserForAuthentication(user, authorities);
  	}
- 
+	@Transactional
+	@Override
+	public String getUserFullName(String username) throws Exception
+	{
+		return userDao.fetchUserByUserName(username).getName();
+	}
 	private User buildUserForAuthentication(org.questionbank.dto.UserDTO user, 
 		List<GrantedAuthority> authorities) {
 		return new User(user.getUserName(), 

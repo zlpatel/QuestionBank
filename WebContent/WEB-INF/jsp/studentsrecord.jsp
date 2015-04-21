@@ -28,7 +28,7 @@
 		<h1 class="bg-primary">QUESTION BANK</h1>
 	</center>
 	<center>
-		<h4>Hi! ${USERNAME}</h4>
+		<h4>Hi, ${name}</h4>
 	</center>
 
 	<nav class="navbar navbar-default navbar-static-top">

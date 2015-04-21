@@ -2,6 +2,8 @@ package org.questionbank.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.questionbank.formbean.AdditionalQuestionsRecordFormBean;
 import org.questionbank.formbean.CategoricalRecordFormBean;
@@ -26,9 +28,22 @@ public class AdminController
 	protected static Logger logger = Logger.getLogger("controller");
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String getAdminPage() {
+	public ModelAndView getAdminPage(HttpSession session) {
 		logger.debug("Received request to show admin page");
-		return "adminpage";
+		
+		ModelAndView model=new ModelAndView("adminpage");
+		try {
+			String fullName=adminService.getAdminName((String)session.getAttribute("USERNAME"));
+			session.setAttribute("name", fullName);
+			//model.addObject("name",fullName);
+			return model;
+		} catch (Exception e) {
+			model=new ModelAndView("err");
+			model.addObject("message", "Something went wrong, please try again later!");
+			session.invalidate();
+			return model;
+		}
+		
 	}
 	@RequestMapping(value = "/studentsRecord", method = RequestMethod.GET)
 	public ModelAndView getStudentsRecord() {

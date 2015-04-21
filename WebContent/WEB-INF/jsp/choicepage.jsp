@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Question Bank</title>
+<title>Thank You</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap.min.css">
@@ -26,7 +26,7 @@
 		<h1 class="bg-primary">QUESTION BANK</h1>
 	</center>
 	<center>
-		<h4>Hi! ${USERNAME}</h4>
+		<h4>Hi, ${name}</h4>
 	</center>
 
 	<nav class="navbar navbar-default navbar-static-top">
@@ -55,7 +55,8 @@
 		<c:when test="${question.typeId == 1}">
 			<h2>Below is a video with explanation of the answer!</h2>
 			<video width="400" controls> <source
-				src="${question.videoLink}" type="video/mp4"> Your browser does not support HTML5 video. </video>
+				src="${question.videoLink}" type="video/mp4"> Your browser
+			does not support HTML5 video. </video>
 		</c:when>
 	</c:choose>
 	<c:choose>
@@ -66,7 +67,7 @@
 			<h2>Do you want to try again?</h2>
 		</c:otherwise>
 	</c:choose>
-	<a href="choice/true">YES</a>
-	<a href="home">NO</a>
+	<a class="btn btn-info" href="choice/true">YES</a>
+	<a class="btn btn-info" href="home">NO</a>
 </body>
 </html>
