@@ -85,20 +85,20 @@ public class QuestionServiceImpl implements QuestionService
 		questionFormBean.setStatement(questionDTO.getStatement());
 		wholeQuestion.append("$ \\documentclass[20pt]{report} $ $\\begin{document} $ "+questionDTO.getStatement());
 		wholeQuestion.append(" $ \\\\ $");
-		optionList.put("1",questionDTO.getOption1());
-		wholeQuestion.append("1. "+questionDTO.getOption1()+" \\newline ");
-		optionList.put("2",questionDTO.getOption2());
-		wholeQuestion.append("2. "+questionDTO.getOption2()+" \\newline ");
-		optionList.put("3",questionDTO.getOption3());
-		wholeQuestion.append("3. "+questionDTO.getOption3()+" \\newline ");
-		optionList.put("4",questionDTO.getOption4());
-		wholeQuestion.append("4. "+questionDTO.getOption4()+" \\newline ");
-		optionList.put("5",questionDTO.getOption5());
-		wholeQuestion.append("5. "+questionDTO.getOption5()+" \\newline ");
+		optionList.put("a",questionDTO.getOption1());
+		wholeQuestion.append("a. "+questionDTO.getOption1()+" \\newline ");
+		optionList.put("b",questionDTO.getOption2());
+		wholeQuestion.append("b. "+questionDTO.getOption2()+" \\newline ");
+		optionList.put("c",questionDTO.getOption3());
+		wholeQuestion.append("c. "+questionDTO.getOption3()+" \\newline ");
+		optionList.put("d",questionDTO.getOption4());
+		wholeQuestion.append("d. "+questionDTO.getOption4()+" \\newline ");
+		optionList.put("e",questionDTO.getOption5());
+		wholeQuestion.append("e. "+questionDTO.getOption5()+" \\newline ");
 		wholeQuestion.append(" $\\end{document} $");
 		questionFormBean.setOptionList(optionList);
 		questionFormBean.setWholeQuestion(wholeQuestion.toString());
-		questionFormBean.setSelectedOption(optionList.get("1"));
+		questionFormBean.setSelectedOption(optionList.get("a"));
 		return questionFormBean;
 			
 	}

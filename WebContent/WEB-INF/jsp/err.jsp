@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Student Record</title>
+<title>Error</title>
 <!-- Latest compiled and minified CSS -->
 
 <link rel="stylesheet"
@@ -25,6 +25,8 @@
 
 </head>
 <body>
+<br>
+<br>
 	<center>
 		<img width=500 height=80
 			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">

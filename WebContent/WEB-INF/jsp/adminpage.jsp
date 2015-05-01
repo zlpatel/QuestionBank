@@ -21,11 +21,13 @@
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<br>
+<br>
 	<center>
 		<img width=500 height=80
 			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
-	<h1 class=" bg-primary">KiSS</h1>
+	<h1>KiSS</h1>
 	<center>
 		<h4>Hi, ${name}</h4>
 	</center>
@@ -34,6 +36,7 @@
 	<ul class="nav navbar-nav">
 		<li class="active"><a href="#">Home</a></li>
 		<li><a href="studentsRecord">Students Record</a></li>
+		<li><a href="addUser">Add User</a></li>
 		<li><a href="javascript:formSubmit()">Logout</a></li>
 	</ul>
 	</nav>
