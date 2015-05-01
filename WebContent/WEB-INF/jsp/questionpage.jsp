@@ -42,8 +42,10 @@
 </head>
 <body onload="convertFromLatexToMathML()">
 	<center>
-		<h1 class="bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
+	<h1 class=" bg-primary">KiSS</h1>
 	<center>
 		<h4>Hi, ${name}</h4>
 	</center>
@@ -57,35 +59,39 @@
 	</nav>
 	<br>
 	<form:form method="POST" modelattribute="command">
-		<table>
-			<tr>
-				<td><form:hidden path="questionId"
-						value="${command.questionId}" /></td>
-				<td><form:hidden path="typeId" value="${command.typeId}" /></td>
-			</tr>
-			<tr>
-				<td><input type="hidden" id="latex"
-					value="${command.wholeQuestion}" style="width: 500px; height: 20px"></input>
-					<canvas id="latexCanvas" width="0" height="0"
-						style="border:0px solid #000000;"></canvas></td>
-				<td><c:choose>
-						<c:when test="${not empty command.imageName}">
-							<img
-								src="${pageContext.request.contextPath}/externalresources/images/${command.imageName}">
-						</c:when>
-					</c:choose></td>
-			</tr>
-			<tr>
-				<td><form:select element="li" path="selectedOption">
-						<c:forEach items="${optionList}" var="option">
-							<form:option value="${option.value}" label="${option.key}" />
-						</c:forEach>
-					</form:select></td>
-			</tr>
-			<tr>
-				<td><input type="submit" name="submit" value="Submit"></td>
-			</tr>
-		</table>
+		<center>
+			<table>
+				<tr>
+					<td><form:hidden path="questionId"
+							value="${command.questionId}" /></td>
+					<td><form:hidden path="typeId" value="${command.typeId}" /></td>
+				</tr>
+				<tr>
+					<td><input type="hidden" id="latex"
+						value="${command.wholeQuestion}"
+						style="width: 500px; height: 20px"></input> <canvas
+							id="latexCanvas" width="0" height="0"
+							style="border:0px solid #000000;"></canvas></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<c:choose>
+							<c:when test="${not empty command.imageName}">
+								<img
+									src="${pageContext.request.contextPath}/externalresources/images/${command.imageName}">
+							</c:when>
+						</c:choose></td>
+				</tr>
+				<tr>
+					<td><center>
+							<form:select element="li" type="a" path="selectedOption">
+								<c:forEach items="${optionList}" var="option">
+									<form:option value="${option.value}" label="${option.key}" />
+								</c:forEach>
+							</form:select>
+							&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-primary"
+								type="submit" name="submit" value="Submit">
+						</center></td>
+				</tr>
+			</table>
+		</center>
 	</form:form>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />

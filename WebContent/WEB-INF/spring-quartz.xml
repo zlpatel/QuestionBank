@@ -31,7 +31,7 @@
 
  <!-- scheduler factory bean to bind,the executing code and time intervals 
   together -->
- <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+ <!-- <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
   <property name="jobDetails">
    <list>
     <ref bean="myJob" />
@@ -42,6 +42,6 @@
     <ref bean="cronTrigger" />
    </list>
   </property>
- </bean>
+ </bean> -->
 
 </beans>

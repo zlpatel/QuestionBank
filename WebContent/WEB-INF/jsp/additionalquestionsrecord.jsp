@@ -45,8 +45,10 @@
 </head>
 <body>
 	<center>
-		<h1 class="bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
+	<h1 class=" bg-primary">KiSS</h1>
 	<center>
 		<h4>Hi, ${name}</h4>
 	</center>
@@ -60,8 +62,20 @@
 	</nav>
 	<br>
 	<form:form method="GET">
-	<a class="fa fa-arrow-circle-left fa-1x btn btn-info" href="../studentsRecord">Back</a>
-	<center>Statistics for Additional questions answered by the ${studentName}</center>
+		<div style="float: center; margin: 0; padding: 0; display: inline">
+			<div style="float: left; margin: 0; padding: 0;">
+				&nbsp;&nbsp;&nbsp;&nbsp;<a
+					class="fa fa-arrow-circle-left fa-1x btn btn-info"
+					href="../studentsRecord">&nbsp;Back</a>
+			</div>
+
+			<div style="float: center; margin: 0; padding: 0;">
+				<h4>
+					Statistics for Additional questions answered by the <b>${studentName}</b>
+				</h4>
+			</div>
+
+		</div>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>

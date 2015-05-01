@@ -11,7 +11,7 @@ body {
 
 .container {
     padding: 25px;
-    position: fixed;   
+    position: relative;   
 }
 
 .form-login {
@@ -26,10 +26,10 @@ body {
     box-shadow:0 1px 0 #cfcfcf;
 }
 
-h4 { 
+h1,h4 { 
  border:0 solid #fff; 
- border-bottom-width:1px;
- padding-bottom:10px;
+ border-bottom-width:0;
+ padding-bottom:0;
  text-align: center;
 }
 

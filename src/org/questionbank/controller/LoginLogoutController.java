@@ -35,7 +35,6 @@ public class LoginLogoutController {
 			}
 		    return "loginpage";
 		 } else { 
-			 System.out.println(session.getAttribute("USERNAME"));
 		    return securityContextAccessor.determineDefaultTargetUrl();
 		 }
 		
@@ -55,11 +54,11 @@ public class LoginLogoutController {
  
 		String error = "";
 		if (exception instanceof BadCredentialsException) {
-			error = "Invalid username and password!";
+			error = "Invalid username and/or password!";
 		}else if(exception instanceof LockedException) {
 			error = exception.getMessage();
 		}else{
-			error = "Invalid username and password!";
+			error = "Invalid username and/or password!";
 		}
 		return error;
 	}

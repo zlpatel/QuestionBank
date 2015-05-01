@@ -34,15 +34,18 @@
 </head>
 <body>
 	<center>
-		<h1 class=" bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
+	<h1 class=" bg-primary">Welcome to KiSS(Keeping in Summer Shape)</h1>
 
-	<%-- <div id="login-error">${error}</div> --%>
 
-	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-		<font color="red"> <c:out
-				value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />.
-		</font>
+
+	<c:if test="${not empty error}">
+		<center>
+			<font color="red"> <c:out value="${error}" />
+			</font>
+		</center>
 	</c:if>
 
 	<form id="loginform"
@@ -55,17 +58,17 @@
 					<div class="form-login">
 						<h4>Sign-In</h4>
 						<input type="text" id="j_username" name="j_username"
-							class="form-control input-sm chat-input" placeholder="username"
-							required autofocus /> </br> 
-						<input type="password" id="j_password"
+							class="form-control input-sm chat-input" placeholder="ASURITE user ID"
+							required autofocus /> </br> <input type="password" id="j_password"
 							name="j_password" class="form-control input-sm chat-input"
 							placeholder="password" required /> </br>
 						<div class="wrapper">
 							<span class="group-btn">
 								<center>
-									<a href="javascript:formSubmit()"
+								<input type="submit" class="btn btn-primary btn-md" value="Login" name="Login">
+									<!-- <a href="javascript:formSubmit()"
 										class="btn btn-primary btn-md">login <i
-										class="fa fa-sign-in"></i></a>
+										class="fa fa-sign-in"></i></a> -->
 								</center>
 							</span>
 						</div>

@@ -23,8 +23,10 @@
 </head>
 <body>
 	<center>
-		<h1 class="bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
+	<h1 class=" bg-primary">KiSS</h1>
 	<center>
 		<h4>Hi, ${name}</h4>
 	</center>
@@ -49,25 +51,27 @@
 			document.getElementById("logoutForm").submit();
 		}
 	</script>
-	<h2>${question.message}</h2>
-	<h2>Thank you for taking the test.</h2>
-	<c:choose>
-		<c:when test="${question.typeId == 1}">
-			<h2>Below is a video with explanation of the answer!</h2>
-			<video width="400" controls> <source
-				src="${question.videoLink}" type="video/mp4"> Your browser
-			does not support HTML5 video. </video>
-		</c:when>
-	</c:choose>
-	<c:choose>
-		<c:when test="${question.correct}">
-			<h2>Do you want to answer more questions?</h2>
-		</c:when>
-		<c:otherwise>
-			<h2>Do you want to try again?</h2>
-		</c:otherwise>
-	</c:choose>
-	<a class="btn btn-info" href="choice/true">YES</a>
-	<a class="btn btn-info" href="home">NO</a>
+	<center>
+		<h3>${question.message}</h3>
+		<h3>Thank you for taking the test.</h3>
+		<c:choose>
+			<c:when test="${question.typeId == 1}">
+				<h3>Below is a video with explanation of the answer!</h3>
+				<video width="400" controls> <source
+					src="${question.videoLink}" type="video/mp4"> Your browser
+				does not support HTML5 video. </video>
+			</c:when>
+		</c:choose>
+		<c:choose>
+			<c:when test="${question.correct}">
+				<h3>Do you want to answer more questions?</h3>
+			</c:when>
+			<c:otherwise>
+				<h3>Do you want to try again?</h3>
+			</c:otherwise>
+		</c:choose>
+		<a class="btn btn-success" href="choice/true">YES</a> <a
+			class="btn btn-danger" href="home">NO</a><br><br>
+	</center>
 </body>
 </html>
