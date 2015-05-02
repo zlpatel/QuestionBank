@@ -59,7 +59,7 @@
 		<c:choose>
 			<c:when test="${question.typeId == 1}">
 				<h3>Below is a video with explanation of the answer!</h3>
-				<video width="400" controls> <source
+				<video height="40%" width="40%" controls> <source
 					src="${question.videoLink}" type="video/mp4"> Your browser
 				does not support HTML5 video. </video>
 			</c:when>
