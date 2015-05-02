@@ -60,7 +60,7 @@ public class LoginLogoutController {
 		}else if(exception instanceof LockedException) {
 			error = exception.getMessage();
 		}else if(exception instanceof SessionAuthenticationException) {
-			error = "The account is currently logged in from other device/other browser.";
+			error = "The user is currently logged in from other device/other browser.";
 		}else{
 			error = "Invalid username and/or password!";
 		}
