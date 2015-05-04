@@ -14,9 +14,10 @@
 <!-- Optional theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/externalresources/bootstrap/css/bootstrap-theme.min.css">
-	
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/externalresources/questionbank.css">
-	
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/externalresources/questionbank.css">
+
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/JavaScript"
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
@@ -26,43 +27,47 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/externalresources/fMath/js/fmathFormulaC.js"></script>
 <script>
-		
-		FMATH.ApplicationConfiguration.setFolderUrlForFonts("fonts");
-		FMATH.ApplicationConfiguration.setFolderUrlForGlyphs("glyphs");
+	FMATH.ApplicationConfiguration.setFolderUrlForFonts("fonts");
+	FMATH.ApplicationConfiguration.setFolderUrlForGlyphs("glyphs");
 
- 		function convertFromLatexToMathML()
-		{
-			var latexInput = document.getElementById("latex");
-			var latexCanvas=document.getElementById("latexCanvas");
-			var formula = new FMATH.MathMLFormula();
-			var mathml = formula.convertLatexToMathML(latexInput.value);
-			formula.drawImage(latexCanvas, mathml);
-		}
-	</script>
+	function convertFromLatexToMathML() {
+		var latexInput = document.getElementById("latex");
+		var latexCanvas = document.getElementById("latexCanvas");
+		var formula = new FMATH.MathMLFormula();
+		var mathml = formula.convertLatexToMathML(latexInput.value);
+		formula.drawImage(latexCanvas, mathml);
+	}
+</script>
 
 </head>
 <body onload="convertFromLatexToMathML()">
-<center><h1 class="bg-primary"> QUESTION BANK </h1> </center>
-<center><h4>Hi, ${name}</h4></center>
-
-<nav class="navbar navbar-default navbar-static-top">
-<ul class="nav navbar-nav">
-<li><a href="home">Home</a></li>
-<li class="active"><a href="#">Solve Questions</a></li>
-<li><a href="javascript:formSubmit()">Logout</a> </li>
-</ul>
-</nav>
 <br>
-	${message}
+<br>
+	<center>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
+	</center>
+	<h1>KiSS</h1>
+	<center>
+		<h4>Hi, ${name}</h4>
+	</center>
+
+	<nav class="navbar navbar-default navbar-static-top">
+	<ul class="nav navbar-nav">
+		<li><a href="home">Home</a></li>
+		<li class="active"><a href="#">Solve Questions</a></li>
+		<li><a href="javascript:formSubmit()">Logout</a></li>
+	</ul>
+	</nav>
+	<br> ${message}
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
- 
+
 	<!-- csrf for log out-->
 	<form action="${logoutUrl}" method="post" id="logoutForm">
-	  <input type="hidden" 
-		name="${_csrf.parameterName}"
-		value="${_csrf.token}" />
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 	</form>
-	
+
 	<script>
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();

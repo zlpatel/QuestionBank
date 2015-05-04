@@ -52,4 +52,10 @@ public class UserDAOImpl implements UserDAO{
 		logger.error("Student does not exist!");
 		throw new Exception("Student does not exist!");
 	}
+	
+	@Override
+	public boolean addStudent(UserDTO user) throws Exception{
+			sessionFactory.getCurrentSession().save(user);
+			return true;
+	}
 }

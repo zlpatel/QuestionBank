@@ -29,20 +29,30 @@
 	rel="stylesheet">
 <!-- Latest compiled and minified JavaScript -->
 <script
+	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/jquery-1.9.1.js"></script>
+<script
 	src="${pageContext.request.contextPath}/externalresources/bootstrap/js/bootstrap.min.js"></script>
-
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+<script
+	src="${pageContext.request.contextPath}/externalresources/jumble/jumble.js"></script>
 </head>
 <body>
+	<br>
+	<br>
 	<center>
-		<h1 class=" bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
-
-	<%-- <div id="login-error">${error}</div> --%>
-
-	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-		<font color="red"> <c:out
-				value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />.
-		</font>
+	<h1>
+		<span class="two">Welcome to KiSS</span> <span class="four">(Keeping
+			in Summer Shape)</span>
+	</h1>
+	<c:if test="${not empty error}">
+		<center>
+			<font color="red"> <c:out value="${error}" />
+			</font>
+		</center>
 	</c:if>
 
 	<form id="loginform"
@@ -55,17 +65,19 @@
 					<div class="form-login">
 						<h4>Sign-In</h4>
 						<input type="text" id="j_username" name="j_username"
-							class="form-control input-sm chat-input" placeholder="username"
-							required autofocus /> </br> 
-						<input type="password" id="j_password"
-							name="j_password" class="form-control input-sm chat-input"
-							placeholder="password" required /> </br>
+							class="form-control input-sm chat-input"
+							placeholder="ASURITE user ID" required autofocus /> <br> <input
+							type="password" id="j_password" name="j_password"
+							class="form-control input-sm chat-input" placeholder="password"
+							required /> <br>
 						<div class="wrapper">
 							<span class="group-btn">
 								<center>
-									<a href="javascript:formSubmit()"
+									<input type="submit" class="btn btn-primary btn-md"
+										value="Login" name="Login">
+									<!-- <a href="javascript:formSubmit()"
 										class="btn btn-primary btn-md">login <i
-										class="fa fa-sign-in"></i></a>
+										class="fa fa-sign-in"></i></a> -->
 								</center>
 							</span>
 						</div>
@@ -83,6 +95,17 @@
 			document.getElementById("loginform").submit();
 		}
 	</script>
-	</div>
+	<script>
+		(function($) {
+
+			$('.one').jumble([ 110, 220, 180 ], false, false, true);
+			$('.three, .two').jumble([ 255, 220, 100 ], [ 255, 255, 255 ],
+					false, false, 100);
+			$('.four').jumble([ 120, 190, 240 ], true, true, false, 100);
+			$('.too').jumble([ 190, 180, 110 ], [ 250, 20, 170 ], true, false,
+					100);
+
+		})(jQuery);
+	</script>
 </body>
 </html>

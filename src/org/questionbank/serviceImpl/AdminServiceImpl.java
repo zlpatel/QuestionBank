@@ -12,10 +12,12 @@ import org.questionbank.dto.CategoryDTO;
 import org.questionbank.dto.RightAttemptsDTO;
 import org.questionbank.dto.UserDTO;
 import org.questionbank.dto.WrongAttemptsDTO;
+import org.questionbank.formbean.AddStudentFormBean;
 import org.questionbank.formbean.AdditionalQuestionsRecordFormBean;
 import org.questionbank.formbean.CategoricalRecordFormBean;
 import org.questionbank.formbean.RegularQuestionsRecordFormBean;
 import org.questionbank.formbean.StudentsRecordFormBean;
+import org.questionbank.handler.HashCode;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,19 @@ public class AdminServiceImpl implements AdminService{
 	private UserDAO userDAO;
 	@Autowired
 	private CategoryDAO categoryDAO;
+	
+	@Transactional
+	@Override
+	public boolean addStudent(AddStudentFormBean student) throws Exception{
+		UserDTO studentDTO=new UserDTO();
+		studentDTO.setName(student.getFullName());
+		studentDTO.setUserName(student.getUserName());
+		studentDTO.setPassword(HashCode.getHashPassword(student.getPassWord()));
+		studentDTO.setAccess(student.getSelectedAccess());
+		
+		userDAO.addStudent(studentDTO);
+		return true;
+	} 
 	
 	@Transactional
 	@Override

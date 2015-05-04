@@ -45,9 +45,13 @@
 
 </head>
 <body>
+<br>
+<br>
 	<center>
-		<h1 class="bg-primary">QUESTION BANK</h1>
+		<img width=500 height=80
+			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
+	<h1>KiSS</h1>
 	<center>
 		<h4>Hi, ${name}</h4>
 	</center>
@@ -56,13 +60,26 @@
 	<ul class="nav navbar-nav">
 		<li><a href="../home">Home</a></li>
 		<li class="active"><a href="#">Students Record</a></li>
+		<li><a href="../addUser">Add User</a></li>
 		<li><a href="javascript:formSubmit()">Logout</a></li>
 	</ul>
 	</nav>
 	<br>
 	<form:form method="GET">
-	<a class="fa fa-arrow-circle-left fa-1x btn btn-info" href="../studentsRecord">Back</a>
-	<center>Statistics for Regular questions answered by the ${studentName}</center>
+		<div style="float: center; margin: 0; padding: 0; display: inline">
+			<div style="float: left; margin: 0; padding: 0;">
+				&nbsp;&nbsp;&nbsp;&nbsp;<a
+					class="fa fa-arrow-circle-left fa-1x btn btn-info"
+					href="../studentsRecord">&nbsp;Back</a>
+			</div>
+
+			<div style="float: center; margin: 0; padding: 0;">
+				<h4>
+					Statistics for Regular questions answered by the <b>${studentName}</b>
+				</h4>
+			</div>
+
+		</div>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>

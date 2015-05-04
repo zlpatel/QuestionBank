@@ -1,38 +1,43 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
 body {
-  background-color:#a8a8a1;
-  -webkit-font-smoothing: antialiased;
-  font: normal 14px Roboto,arial,sans-serif;
+	/* background-color:#a8a8a1; */
+	background: radial-gradient(circle at 50% 50%, rgba(110, 180, 255, 0.85)
+		50%, rgba(175, 220, 130, 0.05) 100%) repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	-webkit-font-smoothing: antialiased;
+	font: normal 14px Roboto, arial, sans-serif;
 }
 
-.bg-primary{
-	background-color:#67655d;
+.bg-primary {
+	/* background-color:#67655d; */
+	
 }
 
 .container {
-    padding: 25px;
-    position: fixed;   
+	padding: 25px;
+	position: relative;
 }
 
 .form-login {
-    background-color: #EDEDED;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 15px;
-    border-color:#d2d2d2;
-    border-width: 5px;
-    box-shadow:0 1px 0 #cfcfcf;
+	background-color: #EDEDED;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 15px;
+	border-color: #d2d2d2;
+	border-width: 5px;
+	box-shadow: 0 1px 0 #cfcfcf;
 }
 
-h4 { 
- border:0 solid #fff; 
- border-bottom-width:1px;
- padding-bottom:10px;
- text-align: center;
+h1,h4 {
+	border: 0 solid #fff;
+	border-bottom-width: 0;
+	padding-bottom: 0;
+	text-align: center;
 }
 
 .form-control {
-    border-radius: 10px;
+	border-radius: 10px;
 }

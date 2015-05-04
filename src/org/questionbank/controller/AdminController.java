@@ -2,9 +2,11 @@ package org.questionbank.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.questionbank.formbean.AddStudentFormBean;
 import org.questionbank.formbean.AdditionalQuestionsRecordFormBean;
 import org.questionbank.formbean.CategoricalRecordFormBean;
 import org.questionbank.formbean.RegularQuestionsRecordFormBean;
@@ -12,6 +14,7 @@ import org.questionbank.formbean.StudentsRecordFormBean;
 import org.questionbank.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -117,5 +120,38 @@ public class AdminController
 		mav.addObject("studentName", studentName);
 		mav.setViewName("additionalquestionsrecord");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
+	public ModelAndView addStudentAccount() {
+		logger.debug("Received request to show add account page");
+		ModelAndView model=new ModelAndView("adduserpage");
+		return model;
+		
+	}
+
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	public ModelAndView addStudentAccount(@ModelAttribute("command")AddStudentFormBean student,
+			HttpSession session,HttpServletRequest request) {
+		logger.debug("Received request to add account");
+		ModelAndView model=null;
+		try {
+			model=new ModelAndView("adduserpage");
+			student.setSelectedAccess(request.getParameter("radios"));
+			adminService.addStudent(student);
+			model.addObject("message", "User "+ student.getFullName() +" successfuly added");
+			student.setFullName("");
+			student.setPassWord("");
+			student.setUserName("");
+			return model;
+		}catch (Exception e) {
+			logger.debug("DB exception during add student.");
+			model=new ModelAndView("adduserpage");
+			model.addObject("error", "User already exist or Error with Database.");
+			student.setFullName("");
+			student.setPassWord("");
+			student.setUserName("");
+			return model;
+		}
 	}
 }
