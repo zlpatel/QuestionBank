@@ -36,6 +36,90 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
 <script
 	src="${pageContext.request.contextPath}/externalresources/jumble/jumble.js"></script>
+<script
+	src="${pageContext.request.contextPath}/externalresources/paper.js"></script>
+
+<script canvas="myCanvas" type="text/paperscript">
+	
+	// Create a centered text item at the center of the view:
+		var text = new PointText({
+			point : view.center,
+			justification : 'center',
+			fontSize : 30,
+			fillColor : 'red'
+		});
+
+		// Define a random point in the view, which we will be moving
+		// the text item towards.
+			var destination = Point.random() * view.size;
+		
+		function onFrame(event) {
+			// Each frame, move the path 1/30th of the difference in position
+			// between it and the destination.
+
+			// The vector is the difference between the position of
+			// the text item and the destination point:
+			var vector = destination - text.position;
+
+			// We add 1/30th of the vector to the position property
+			// of the text item, to move it in the direction of the
+			// destination point:
+			text.position += vector / 30;
+
+			// Set the content of the text item to be the length of the vector.
+			// I.e. the distance it has to travel still:
+			text.content = Math.round(vector.length);
+
+			// If the distance between the path and the destination is less
+			// than 5, we define a new random point in the view to move the
+			// path to:
+			if (vector.length < 5) {
+				destination = Point.random() * view.size;
+			}
+		}
+	</script> 
+<!--<script canvas="myCanvas1" type="text/paperscript">
+	// The amount of circles we want to make:
+	var count = 150;
+
+	// Create a symbol, which we will use to place instances of later:
+	var path = new Path.Circle({
+		center : [ 0, 0 ],
+		radius : 10,
+		fillColor : 'white',
+		strokeColor : 'black'
+	});
+
+	var symbol = new Symbol(path);
+
+	// Place the instances of the symbol:
+	for (var i = 0; i < count; i++) {
+		// The center position is a random point in the view:
+		var center = Point.random() * view.size;
+		var placedSymbol = symbol.place(center);
+		placedSymbol.scale(i / count);
+	}
+
+	// The onFrame function is called up to 60 times a second:
+	function onFrame(event) {
+		// Run through the active layer's children list and change
+		// the position of the placed symbols:
+		for (var i = 0; i < count; i++) {
+			var item = project.activeLayer.children[i];
+
+			// Move the item 1/20th of its width to the right. This way
+			// larger circles move faster than smaller circles:
+			item.position.x += item.bounds.width / 20;
+
+			// If the item has left the view on the right, move it back
+			// to the left:
+			if (item.bounds.left > view.size.width) {
+				item.position.x = -item.bounds.width;
+			}
+		}
+	}
+</script>-->
+
 </head>
 <body>
 	<br>
@@ -45,7 +129,7 @@
 			src="${pageContext.request.contextPath}/externalresources/logos/asu_math_header.jpg">
 	</center>
 	<h1>
-		<span class="two">Welcome to KiSS</span> <span class="four">(Keeping
+		<span class="four">Welcome to KiSS</span> <span class="four">(Keeping
 			in Summer Shape)</span>
 	</h1>
 	<c:if test="${not empty error}">
@@ -90,6 +174,14 @@
 			value="${_csrf.token}" />
 	</form>
 
+	<div class="canvas">
+		<canvas id="myCanvas"
+			style="background: none repeat scroll 0% 0% transperant; -moz-user-select: none; width: 100%; height: 20%;"
+			width="100%" height="20%" data-paper-scope="1"
+			data-paper-resize="true" />
+	</div>
+
+
 	<script>
 		function formSubmit() {
 			document.getElementById("loginform").submit();
@@ -100,8 +192,8 @@
 
 			$('.one').jumble([ 110, 220, 180 ], false, false, true);
 			$('.three, .two').jumble([ 255, 220, 100 ], [ 255, 255, 255 ],
-					false, false, 100);
-			$('.four').jumble([ 120, 190, 240 ], true, true, false, 100);
+					false, false, 300);
+			$('.four').jumble([ 120, 190, 240 ], true, true, false);
 			$('.too').jumble([ 190, 180, 110 ], [ 250, 20, 170 ], true, false,
 					100);
 
